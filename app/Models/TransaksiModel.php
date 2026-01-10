@@ -15,7 +15,7 @@ class TransaksiModel extends Model
 
     public function getDetailedTransactions()
     {
-        return $this->select('transaksi.*, barang.nama_hp, barang.kode_barang, suppliers.nama_supplier')
+        return $this->select('transaksi.*, barang.nama_hp, barang.kode_barang, barang.merek, suppliers.nama_supplier')
                     ->join('barang', 'barang.id = transaksi.barang_id')
                     ->join('suppliers', 'suppliers.id = transaksi.supplier_id', 'left')
                     ->orderBy('transaksi.tanggal', 'DESC')

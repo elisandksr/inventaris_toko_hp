@@ -31,12 +31,19 @@
             background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             display: flex; align-items: center; gap: 0.5rem;
         }
-        .search-box input { width: 350px; padding: 0.7rem 1rem 0.7rem 3rem; border: 2px solid #e2e8f0; border-radius: 50px; background: #f8fafc; }
+        .search-box { position: relative; width: 350px; }
+        .search-box input {
+            width: 100%; padding: 0.7rem 1rem 0.7rem 3rem; border: 2px solid #e2e8f0; border-radius: 50px;
+            background: #f8fafc; transition: 0.3s;
+        }
+        .search-box input:focus { border-color: #a855f7; outline: none; box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1); }
+        .search-box i { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 1.2rem; }
         .app-navbar {
             height: 50px; background: white; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; padding: 0 2rem;
             position: fixed; top: var(--header-height); left: 0; right: 0; z-index: 990; padding-left: calc(var(--sidebar-width) + 2rem);
         }
-        .nav-link { margin-right: 20px; font-weight: 700; color: var(--text-gray); display: flex; align-items: center; gap: 6px; }
+        .profile { display: flex; align-items: center; gap: 1rem; }
+        .avatar { width: 42px; height: 42px; background: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3); }
         
         .app-sidebar {
             width: var(--sidebar-width); background: white; border-right: 2px solid #e2e8f0;
@@ -49,8 +56,33 @@
         }
         .menu-item:hover, .menu-item.active { background: var(--primary-gradient); color: white; transform: translateX(5px); }
 
+        /* BREADCRUMB */
+        .breadcrumb {
+            background: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            position: fixed;
+            top: var(--header-height);
+            left: var(--sidebar-width);
+            right: 0;
+            z-index: 990;
+        }
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
         /* MAIN CONTENT */
-        .main-content { margin-top: 120px; margin-left: var(--sidebar-width); padding: 2rem; flex: 1; }
+        .main-content { margin-top: var(--header-height); margin-left: var(--sidebar-width); padding: 2rem; flex: 1; }
         
         /* TABLE CARD */
         .card { background: white; border-radius: 20px; padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
@@ -90,37 +122,50 @@
 </head>
 <body>
 
-    <!-- HEADER & NAVBAR & SIDEBAR -->
+    <!-- HEADER -->
     <header class="app-header">
-        <div class="brand"><i class='bx bxs-rocket'></i> INVENTORY GUDANG</div>
-        <div class="search-box"><input type="text" placeholder="Cari IMEI / Kode Barang..."></div>
-        <div style="display:flex; align-items:center; gap:1rem;">
-            <span style="font-weight:700;"><?= session()->get('nama_admin') ?></span>
-            <div style="width:40px; height:40px; background:linear-gradient(135deg,#3b82f6,#2dd4bf); border-radius:50%; display:flex; align-items:center; justify-content:center; color:white;"><i class='bx bxs-user'></i></div>
+        <div class="brand"><i class='bx bxs-mobile-vibration'></i> INVENTORY GUDANG HP</div>
+        <div class="search-box">
+            <i class='bx bx-search'></i>
+            <input type="text" placeholder="Cari IMEI / Kode Barang...">
+        </div>
+        <div class="profile">
+            <div style="text-align:right;">
+                <div style="font-weight:700; font-size:0.95rem;"><?= session()->get('nama_admin') ?></div>
+                <div style="font-size:0.75rem; color:#f472b6; font-weight:600;">Super Admin</div>
+            </div>
+            <div class="avatar"><i class='bx bxs-user'></i></div>
         </div>
     </header>
 
-    <nav class="app-navbar">
-        <a href="<?= base_url('dashboard') ?>" class="nav-link"><i class='bx bxs-home-smile'></i> Dashboard</a>
-        <a href="#" class="nav-link"><i class='bx bxs-heart'></i> About Me</a>
-    </nav>
-
+    <!-- SIDEBAR -->
     <aside class="app-sidebar">
-        <div class="menu-title">Main Menu</div>
-        <a href="<?= base_url('dashboard') ?>" class="menu-item"><i class='bx bxs-dashboard'></i> Dashboard</a>
+    <a href="<?= base_url('dashboard') ?>" class="menu-item"><i class='bx bxs-dashboard'></i> Dashboard</a>
+        <div class="menu-title">Master Data</div>
+        
         <a href="<?= base_url('barang') ?>" class="menu-item active"><i class='bx bxs-component'></i> Data Barang</a>
+        <a href="<?= base_url('supplier') ?>" class="menu-item"><i class='bx bxs-truck'></i> Supplier</a>
+        
         <div class="menu-title">Transaksi</div>
         <a href="<?= base_url('transaksi/masuk') ?>" class="menu-item"><i class='bx bxs-down-arrow-square'></i> Barang Masuk</a>
         <a href="<?= base_url('transaksi/keluar') ?>" class="menu-item"><i class='bx bxs-up-arrow-square'></i> Barang Keluar</a>
-        <a href="<?= base_url('supplier') ?>" class="menu-item"><i class='bx bxs-truck'></i> Supplier</a>
-        <div class="menu-title">System</div>
+        
+        
+        <div class="menu-title">Laporan</div>
         <a href="<?= base_url('laporan') ?>" class="menu-item"><i class='bx bxs-pie-chart-alt-2'></i> Laporan</a>
         <a href="<?= base_url('logout') ?>" class="menu-item" style="color:#f43f5e;"><i class='bx bxs-log-out'></i> Logout</a>
     </aside>
 
+    <!-- BREADCRUMB -->
+    <nav class="breadcrumb">
+        <a href="<?= base_url('dashboard') ?>">Dashboard</a>
+        <i class='bx bx-chevron-right'></i>
+        <span>Data Barang</span>
+    </nav>
+
     <!-- MAIN CONTENT -->
     <main class="main-content">
-        <div class="card">
+        <div class="card" style="margin-top: 80px;">
             <div class="card-header">
                 <div class="card-title"><i class='bx bxs-folder-open' style="color:#a855f7;"></i> Daftar Barang</div>
                 <button class="btn btn-primary" onclick="openModal()"><i class='bx bx-plus'></i> Tambah Data</button>
