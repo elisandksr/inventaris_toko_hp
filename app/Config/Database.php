@@ -28,7 +28,7 @@ class Database extends Config
         'DSN'          => '',
         'hostname'     => 'localhost',
         'username'     => 'root',
-        'password'     => '',  // XAMPP default: root tanpa password
+        'password'     => '',  
         'database'     => 'uas_web_2',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
