@@ -192,7 +192,6 @@
         </div>
 
         <div class="team-grid">
-            <!-- Amelia -->
             <div class="team-card">
                 <div class="team-avatar" style="background: linear-gradient(135deg, #f472b6 0%, #db2777 100%); box-shadow: 0 10px 20px rgba(219, 39, 119, 0.3);">
                     <i class='bx bxs-face'></i>
@@ -202,7 +201,6 @@
                 <p style="margin-top:1rem; color:#64748b;">Prodi: D4 Teknologi Rekayasa Perangkat Lunak</p>
             </div>
 
-            <!-- Elis -->
             <div class="team-card">
                 <div class="team-avatar" style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); box-shadow: 0 10px 20px rgba(126, 34, 206, 0.3);">
                     <i class='bx bxs-face-mask'></i>
