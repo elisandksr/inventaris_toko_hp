@@ -208,7 +208,7 @@
         </div>
         
         <form action="<?= base_url('barang') ?>" method="get" class="search-box">
-            <input type="text" name="q" placeholder="Cari data barang, supplier..." value="<?= isset($keyword) ? $keyword : '' ?>">
+            <input type="text" name="q" placeholder="Cari data barang..." value="<?= isset($keyword) ? $keyword : '' ?>">
             <i class='bx bx-search'></i>
         </form>
 
