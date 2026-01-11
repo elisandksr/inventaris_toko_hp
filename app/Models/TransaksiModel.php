@@ -11,7 +11,7 @@ class TransaksiModel extends Model
     protected $allowedFields    = ['jenis', 'barang_id', 'supplier_id', 'jumlah', 'tanggal', 'keterangan'];
     protected $useTimestamps    = true;
     protected $createdField     = 'created_at';
-    protected $updatedField     = ''; // No updated_at for transaction history usually
+    protected $updatedField     = ''; 
 
     public function getDetailedTransactions()
     {
