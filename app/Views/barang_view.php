@@ -202,7 +202,6 @@
 
     <!-- HEADER -->
     <header class="app-header">
-        <!-- EXACT COPY FROM DASHBOARD FOR CONSISTENCY -->
         <div class="brand">
             <i class='bx bxs-store' style="font-size: 1.8rem;"></i> 
             Inventory Toko HP Amelia & Elis
