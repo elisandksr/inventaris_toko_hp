@@ -36,9 +36,13 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
     $routes->get('supplier', 'Supplier::index');
     $routes->get('supplier/create', 'Supplier::create');
     $routes->post('supplier/store', 'Supplier::store');
+    $routes->post('supplier/save', 'Supplier::save'); // Added for Modal
     $routes->get('supplier/edit/(:num)', 'Supplier::edit/$1');
     $routes->post('supplier/update/(:num)', 'Supplier::update/$1');
     $routes->get('supplier/delete/(:num)', 'Supplier::delete/$1');
+    
+    // About Route
+    $routes->get('about', 'About::index');
 
     // Laporan Routes
     $routes->get('laporan', 'Laporan::index');
@@ -48,4 +52,6 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
     $routes->get('laporan/supplier', 'Laporan::supplier');
     $routes->get('laporan/exportStok', 'Laporan::exportStok');
     $routes->get('laporan/exportTransaksi', 'Laporan::exportTransaksi');
+    $routes->get('laporan/exportKeuangan', 'Laporan::exportKeuangan');
+    $routes->get('laporan/exportSupplier', 'Laporan::exportSupplier');
 });

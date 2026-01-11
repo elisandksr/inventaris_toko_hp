@@ -23,25 +23,57 @@
         }
 
         * { margin:0; padding:0; box-sizing:border-box; font-family: 'Nunito', sans-serif; }
+        html { overflow-y: scroll; } /* Force Scrollbar for consistency */
         body { background: var(--bg-body); color: var(--text-dark); display: flex; flex-direction: column; min-height: 100vh; }
 
         /* HEADER */
+        /* 1. HEADER - Colorful & Glassy */
         .app-header {
             height: var(--header-height);
-            background: var(--glass-white);
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
-            border-bottom: 2px solid #e2e8f0;
+            border-bottom: 2px solid transparent;
+            border-image: linear-gradient(to right, #6366f1, #a855f7, #ec4899) 1;
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 2rem; position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
-        .brand {
-            font-family: 'Fredoka', sans-serif; font-size: 1.5rem; font-weight: 600;
-            background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            display: flex; align-items: center; gap: 0.5rem; letter-spacing: 0.5px;
+        .brand { 
+            font-family: 'Fredoka', sans-serif; font-size: 1.6rem; font-weight: 700; 
+            background: linear-gradient(to right, #6366f1, #d946ef, #f43f5e); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            display: flex; align-items: center; gap: 0.8rem; letter-spacing: 0.5px;
+            filter: drop-shadow(0 2px 4px rgba(99, 102, 241, 0.2));
         }
-        .profile { display: flex; align-items: center; gap: 1rem; }
-        .avatar { width: 42px; height: 42px; background: var(--secondary-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3); }
+        .search-box { position: relative; width: 400px; }
+        .search-box input {
+            width: 100%; padding: 0.8rem 1.2rem 0.8rem 3.2rem; 
+            border: 2px solid #e2e8f0; border-radius: 50px;
+            background: #f8fafc; transition: all 0.3s ease;
+            font-size: 0.95rem; height: 48px; color: var(--text-dark);
+        }
+        .search-box input:focus { 
+            border-color: #d946ef; background: white; 
+            box-shadow: 0 0 0 4px rgba(217, 70, 239, 0.15); 
+        }
+        .search-box i { 
+            position: absolute; left: 1.2rem; top: 50%; transform: translateY(-50%); 
+            color: #94a3b8; font-size: 1.4rem; transition: 0.3s;
+        }
+        .search-box input:focus + i { color: #d946ef; }
+        
+        .profile { display: flex; align-items: center; gap: 1rem; padding-left: 1rem; border-left: 1px solid #e2e8f0; height: 40px; margin-left: 1rem; }
+        .avatar { 
+            width: 45px; height: 45px; 
+            background: linear-gradient(135deg, #f43f5e 0%, #a855f7 100%); 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+            color: white; font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(244, 63, 94, 0.4); 
+            transition: 0.3s;
+            border: 2px solid white;
+            outline: 2px solid #f43f5e;
+        }
+        .avatar:hover { transform: scale(1.1) rotate(5deg); }
 
         /* SIDEBAR */
         .app-sidebar {
@@ -63,35 +95,30 @@
             transform: translateX(5px);
         }
         .menu-item i { font-size: 1.3rem; }
-
-        /* BREADCRUMB */
+        
+        /* 2. SECONDARY NAVBAR (BREADCRUMB BAR) - Consistent Layout */
+        .app-navbar {
+            height: 50px; background: white; border-bottom: 1px solid #e2e8f0;
+            display: flex; align-items: center; padding: 0 2rem;
+            position: fixed; top: var(--header-height); left: 0; right: 0; z-index: 990;
+            padding-left: calc(var(--sidebar-width) + 2rem);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        
+        /* BREADCRUMB STYLING WITHIN NAVBAR */
         .breadcrumb {
-            background: white;
-            padding: 12px 24px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            position: fixed;
-            top: var(--header-height);
-            left: var(--sidebar-width);
-            right: 0;
-            z-index: 990;
+            background: transparent; padding: 0; margin: 0;
+            box-shadow: none; display: flex; align-items: center; gap: 8px;
+            font-size: 0.9rem; font-weight: 600; color: var(--text-gray);
         }
-        .breadcrumb a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-        .breadcrumb a:hover {
-            text-decoration: underline;
-        }
+        .breadcrumb a { color: var(--text-gray); text-decoration: none; transition: 0.3s; display: flex; align-items: center; gap: 5px; }
+        .breadcrumb a:hover { color: var(--primary); }
+        .breadcrumb i { color: #cbd5e1; font-size: 1.2rem; }
+        .breadcrumb span { color: var(--primary); font-weight: 700; }
 
         /* MAIN CONTENT */
         .main-content {
-            margin-top: var(--header-height);
+            margin-top: 120px; /* Header (70px) + Navbar (50px) */
             margin-left: var(--sidebar-width);
             padding: 2rem;
             flex: 1;
@@ -299,59 +326,66 @@
     </style>
 </head>
 <body>
+    <?php if(isset($error)): ?>
+        <div style="max-width:800px; margin:50px auto; padding:20px; background:white; border-radius:12px; box-shadow:0 4px 6px rgba(0,0,0,0.1); font-family:'Nunito', sans-serif;">
+            <h1 style="color:#ef4444; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem;"><i class='bx bxs-error-circle'></i> Terjadi Kesalahan</h1>
+            <div style="background:#fef2f2; color:#b91c1c; padding:15px; border-radius:8px; border:1px solid #fecaca; margin-bottom:1.5rem;">
+                <?= esc($error) ?>
+            </div>
+            <p>Silakan coba refresh halaman atau hubungi pengembang jika masalah berlanjut.</p>
+            <a href="<?= base_url('dashboard') ?>" style="display:inline-block; margin-top:1rem; padding:0.75rem 1.5rem; background:#6366f1; color:white; text-decoration:none; border-radius:8px; font-weight:700;">Kembali ke Dashboard</a>
+        </div>
+        </body></html>
+        <?php exit; endif; ?>
 
     <!-- HEADER -->
     <header class="app-header">
-        <div class="brand"><i class='bx bxs-mobile-vibration'></i> INVENTORY GUDANG HP</div>
+        <div class="brand">
+            <i class='bx bxs-store' style="font-size: 1.8rem;"></i> 
+            Inventory Toko HP Amelia & Elis
+        </div>
+        
+        <!-- Search removed for this page -->
+
         <div class="profile">
             <div style="text-align:right;">
-                <div style="font-weight:700; font-size:0.95rem;"><?= session()->get('nama_admin') ?></div>
-                <div style="font-size:0.75rem; color:#f472b6; font-weight:600;">Super Admin</div>
+                <div style="font-weight:700; font-size:0.95rem; color: #1e293b;"><?= session()->get('nama_admin') ?></div>
+                <div style="font-size:0.75rem; color:#d946ef; font-weight:700;">Owner & Admin</div>
             </div>
-            <div class="avatar"><i class='bx bxs-user'></i></div>
+            <div class="avatar"><i class='bx bxs-face'></i></div>
         </div>
     </header>
 
     <!-- SIDEBAR -->
+    <!-- SIDEBAR -->
     <aside class="app-sidebar">
-        <a href="<?= base_url('dashboard') ?>" class="menu-item">
-            <i class='bx bxs-dashboard'></i> Dashboard
-        </a>
+        <a href="<?= base_url('dashboard') ?>" class="menu-item"><i class='bx bxs-dashboard'></i> Dashboard</a>
         <div class="menu-title">Master Data</div>
-
-        <a href="<?= base_url('barang') ?>" class="menu-item">
-            <i class='bx bxs-component'></i> Data Barang
-        </a>
-        <a href="<?= base_url('supplier') ?>" class="menu-item">
-            <i class='bx bxs-truck'></i> Supplier
-        </a>
-
+        
+        <a href="<?= base_url('barang') ?>" class="menu-item"><i class='bx bxs-component'></i> Data Barang</a>
+        <a href="<?= base_url('supplier') ?>" class="menu-item"><i class='bx bxs-truck'></i> Supplier</a>
+        
         <div class="menu-title">Transaksi</div>
-        <a href="<?= base_url('transaksi/masuk') ?>" class="menu-item">
-            <i class='bx bxs-down-arrow-square'></i> Barang Masuk
-        </a>
-        <a href="<?= base_url('transaksi/keluar') ?>" class="menu-item">
-            <i class='bx bxs-up-arrow-square'></i> Barang Keluar
-        </a>
-
+        <a href="<?= base_url('transaksi/masuk') ?>" class="menu-item"><i class='bx bxs-down-arrow-square'></i> Barang Masuk</a>
+        <a href="<?= base_url('transaksi/keluar') ?>" class="menu-item"><i class='bx bxs-up-arrow-square'></i> Barang Keluar</a>
+        
+        
         <div class="menu-title">Laporan</div>
-        <a href="<?= base_url('laporan') ?>" class="menu-item active">
-            <i class='bx bxs-pie-chart-alt-2'></i> Laporan
-        </a>
-        <a href="<?= base_url('logout') ?>" class="menu-item" style="color:#f43f5e;">
-            <i class='bx bx-log-out'></i> Logout
-        </a>
+        <a href="<?= base_url('laporan') ?>" class="menu-item active"><i class='bx bxs-pie-chart-alt-2'></i> Laporan</a>
+        <a href="<?= base_url('logout') ?>" class="menu-item" style="color:#f43f5e;"><i class='bx bxs-log-out'></i> Logout</a>
     </aside>
 
-    <!-- BREADCRUMB -->
-    <nav class="breadcrumb">
-        <a href="<?= base_url('dashboard') ?>">Dashboard</a>
-        <i class='bx bx-chevron-right'></i>
-        <span>Laporan</span>
+    <!-- NAVBAR (BREADCRUMB) -->
+    <nav class="app-navbar">
+        <div class="breadcrumb">
+            <a href="<?= base_url('dashboard') ?>"><i class='bx bxs-home-smile'></i> Dashboard</a>
+            <i class='bx bx-chevron-right'></i>
+            <span>Laporan</span>
+        </div>
     </nav>
 
     <!-- MAIN CONTENT -->
-    <main class="main-content" style="margin-top: 100px;">
+    <main class="main-content">
 
         <!-- HEADER CARD -->
         <div class="header-card">
@@ -504,6 +538,9 @@
             <div id="keuangan" class="tab-content">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <h3 style="margin: 0; color: var(--text-dark);">Laporan Keuangan</h3>
+                    <a href="<?= base_url('laporan/exportKeuangan') ?>" class="btn btn-success">
+                        <i class='bx bx-download'></i> Export Excel
+                    </a>
                 </div>
                 <div class="table-responsive">
                     <table class="table">
@@ -565,6 +602,9 @@
             <div id="supplier" class="tab-content">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <h3 style="margin: 0; color: var(--text-dark);">Laporan Supplier</h3>
+                    <a href="<?= base_url('laporan/exportSupplier') ?>" class="btn btn-success">
+                        <i class='bx bx-download'></i> Export Excel
+                    </a>
                 </div>
                 <div class="table-responsive">
                     <table class="table">

@@ -19,8 +19,21 @@ class Supplier extends BaseController
      */
     public function index()
     {
+        $keyword = $this->request->getVar('q');
+
+        if ($keyword) {
+            $suppliers = $this->supplierModel->like('nama_supplier', $keyword)
+                        ->orLike('alamat', $keyword)
+                        ->orLike('telepon', $keyword)
+                        ->orLike('email', $keyword)
+                        ->findAll();
+        } else {
+            $suppliers = $this->supplierModel->findAll();
+        }
+
         $data = [
-            'suppliers' => $this->supplierModel->findAll()
+            'suppliers' => $suppliers,
+            'keyword' => $keyword
         ];
         return view('supplier_view', $data);
     }
@@ -68,6 +81,32 @@ class Supplier extends BaseController
             'supplier' => $supplier
         ];
         return view('supplier_form_view', $data);
+    }
+
+    /**
+     * Simpan data (Insert / Update) dari Modal
+     */
+    public function save()
+    {
+        $id = $this->request->getVar('id');
+        
+        $data = [
+            'nama_supplier' => $this->request->getVar('nama_supplier'),
+            'alamat' => $this->request->getVar('alamat'),
+            'telepon' => $this->request->getVar('telepon'),
+            'email' => $this->request->getVar('email')
+        ];
+
+        // Jika ID ada, tambahkan ke data untuk update
+        if (!empty($id)) {
+            $data['id'] = $id;
+        }
+
+        if ($this->supplierModel->save($data)) {
+            return redirect()->to('/supplier')->with('success', 'Data supplier berhasil disimpan.');
+        } else {
+            return redirect()->to('/supplier')->with('error', 'Gagal menyimpan data.');
+        }
     }
 
     /**

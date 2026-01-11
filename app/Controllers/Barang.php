@@ -16,9 +16,22 @@ class Barang extends BaseController
 
     public function index()
     {
+        $keyword = $this->request->getVar('q');
+
+        if ($keyword) {
+            $barang = $this->barangModel->like('nama_hp', $keyword)
+                        ->orLike('kode_barang', $keyword)
+                        ->orLike('imei', $keyword)
+                        ->findAll();
+        } else {
+            $barang = $this->barangModel->findAll();
+        }
+
         $data = [
-            'barang' => $this->barangModel->findAll()
+            'barang' => $barang,
+            'keyword' => $keyword
         ];
+        
         return view('barang_view', $data);
     }
 
