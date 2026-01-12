@@ -382,6 +382,13 @@
         <a href="<?= base_url('laporan') ?>" class="menu-item"><i class='bx bxs-pie-chart-alt-2'></i> Laporan</a>
 
         <a href="<?= base_url('logout') ?>" class="menu-item" style="color:#f43f5e;"><i class='bx bxs-log-out'></i> Logout</a>
+
+        <!-- Copyright text di bagian bawah sidebar -->
+        <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); text-align: center; color: #94a3b8; font-size: 0.8rem; font-weight: 600; line-height: 1.2;">
+            @2026<br>
+            Manajemen Inventaris<br>
+            Gudang Toko HP
+        </div>
     </aside>
 
     <!-- NAVBAR (BREADCRUMB) -->

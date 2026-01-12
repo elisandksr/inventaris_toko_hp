@@ -1,68 +1,148 @@
-# CodeIgniter 4 Application Starter
+# 🏪 Sistem Manajemen Inventaris Toko HP Amelia & Elis
 
-## What is CodeIgniter?
+Aplikasi web-based untuk mengelola inventaris handphone (HP) di toko retail menggunakan framework CodeIgniter 4.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## 📋 Deskripsi Aplikasi
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+Sistem ini dirancang untuk membantu pemilik toko HP dalam mengelola:
+- ✅ Data barang (handphone) dengan detail lengkap
+- ✅ Data supplier/pemasok
+- ✅ Transaksi barang masuk dan keluar
+- ✅ Monitoring stok real-time
+- ✅ Laporan keuangan dan aktivitas
+- ✅ Dashboard dengan statistik visual
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## 🏗️ Arsitektur Aplikasi
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+### Struktur MVC (Model-View-Controller)
+```
+app/
+├── Controllers/     # Mengatur logika aplikasi dan response ke user
+│   ├── BaseController.php    # Controller base class
+│   ├── Dashboard.php         # Halaman dashboard utama
+│   ├── Barang.php           # CRUD data barang
+│   ├── Supplier.php         # CRUD data supplier
+│   ├── Transaksi.php        # Mengelola transaksi masuk/keluar
+│   ├── Laporan.php          # Generate laporan
+│   ├── About.php           # Halaman about
+│   └── Auth.php            # Sistem authentication
+├── Models/          # Mengelola interaksi dengan database
+│   ├── BarangModel.php      # Model untuk tabel barang
+│   ├── SupplierModel.php    # Model untuk tabel suppliers
+│   ├── TransaksiModel.php   # Model untuk tabel transaksi
+│   └── AdminModel.php       # Model untuk tabel admins
+├── Views/          # Template tampilan HTML
+│   ├── dashboard_view.php   # Dashboard dengan statistik
+│   ├── barang_view.php      # List dan form data barang
+│   ├── supplier_view.php    # List dan form data supplier
+│   ├── transaksi_masuk_view.php  # Form transaksi masuk
+│   ├── transaksi_keluar_view.php # Form transaksi keluar
+│   ├── laporan_view.php     # Halaman laporan
+│   └── login_view.php       # Halaman login
+└── Config/         # Konfigurasi aplikasi
+    ├── Database.php         # Setup koneksi database
+    ├── Routes.php          # Definisi routing URL
+    └── App.php            # Konfigurasi aplikasi utama
+```
 
-## Installation & updates
+### Database Schema
+```sql
+- admins: Data administrator sistem
+- barang: Data handphone (nama, merek, IMEI, harga, stok, dll)
+- suppliers: Data pemasok/supplier
+- transaksi: Riwayat transaksi masuk/keluar
+```
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+## 🚀 Fitur Utama
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+### 1. Dashboard
+- **Statistik Real-time**: Total jenis HP, total unit, total aset, item perlu restock
+- **Alert Stok Menipis**: Notifikasi otomatis untuk barang yang stok < 5 unit
+- **Aktivitas Terakhir**: Log transaksi hari ini
 
-## Setup
+### 2. Manajemen Barang
+- **CRUD Lengkap**: Tambah, edit, hapus, dan cari data HP
+- **Detail Lengkap**: Kode barang, nama, merek, IMEI, harga beli/jual, stok, lokasi rak
+- **Status Otomatis**: Ready/Kosong/Menipis berdasarkan jumlah stok
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+### 3. Manajemen Supplier
+- **Data Contact**: Nama, alamat, telepon, email
+- **Statistik**: Jumlah transaksi per supplier
+- **Validasi**: Cek supplier yang masih memiliki riwayat sebelum dihapus
 
-## Important Change with index.php
+### 4. Transaksi
+- **Barang Masuk**: Penerimaan dari supplier dengan update stok otomatis
+- **Barang Keluar**: Penjualan dengan validasi stok cukup
+- **Rollback**: Koreksi transaksi dengan pengembalian stok
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+### 5. Laporan
+- **Laporan Stok**: Kondisi inventory saat ini
+- **Laporan Transaksi**: Riwayat masuk/keluar
+- **Laporan Keuangan**: Analisis aset dan profit
+- **Export Excel**: Download laporan dalam format spreadsheet
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+## 🛠️ Teknologi
 
-**Please** read the user guide for a better explanation of how CI4 works!
+- **Framework**: CodeIgniter 4.4.x
+- **Database**: MySQL/MariaDB
+- **Frontend**: HTML5, CSS3, JavaScript, BoxIcons
+- **Authentication**: Session-based
+- **Styling**: Custom CSS dengan gradient dan glassmorphism
 
-## Repository Management
+## 📦 Instalasi
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+### Prerequisites
+- PHP 8.1+
+- MySQL/MariaDB
+- Composer
+- Web Server (Apache/Nginx)
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+### Langkah Instalasi
+1. **Clone Repository**
+   ```bash
+   git clone https://github.com/elisandksr/inventaris_toko_hp.git
+   cd inventaris_toko_hp
+   ```
 
-## Server Requirements
+2. **Install Dependencies**
+   ```bash
+   composer install
+   ```
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+3. **Setup Database**
+   - Import file `uas_web_2.sql` ke MySQL
+   - Sesuaikan konfigurasi di `app/Config/Database.php`
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+4. **Konfigurasi Environment**
+   ```bash
+   cp env .env
+   # Edit .env untuk baseURL dan database settings
+   ```
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+5. **Jalankan Aplikasi**
+   ```bash
+   php spark serve
+   ```
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+## 🔐 Default Login
+- **Username**: admin
+- **Password**: admin123
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+## 📊 Flow Aplikasi
+
+1. **Login** → Dashboard dengan overview
+2. **Kelola Barang** → CRUD data HP
+3. **Kelola Supplier** → CRUD data pemasok
+4. **Transaksi Masuk** → Penerimaan barang dari supplier
+5. **Transaksi Keluar** → Penjualan barang
+6. **Laporan** → Export data untuk analisis
+
+## 🤝 Developer
+
+- **Amelia & Elis** - Developer & Designer
+- **Framework**: CodeIgniter 4
+- **UI/UX**: Modern gradient design dengan responsive layout
+
+## 📝 Lisensi
+
+MIT License - bebas digunakan untuk keperluan edukasi dan komersial.

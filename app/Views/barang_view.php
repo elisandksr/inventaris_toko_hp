@@ -1,11 +1,31 @@
+<!-- =================================================================
+     HALAMAN DATA BARANG - MANAJEMEN INVENTARIS TOKO HP
+     =================================================================
+     File ini menampilkan dan mengelola data barang HP dengan fitur:
+     - Tabel daftar semua barang dengan detail lengkap
+     - Form tambah barang baru
+     - Modal edit dan hapus barang
+     - Pencarian dan filter data
+     - Peringatan stok rendah
+===================================================================== -->
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Judul halaman untuk manajemen data barang -->
     <title>Data Barang - Inventory Ceria</title>
+
+    <!-- CDN untuk ikon BoxIcons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- Google Fonts untuk typography -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- ========================================================
+         CSS INTERNAL - STYLING KHUSUS HALAMAN DATA BARANG
+         ======================================================== -->
     <style>
         :root {
             --primary: #6366f1;
@@ -18,12 +38,29 @@
             --text-gray: #64748b;
         }
 
-        /* Force Scrollbar to prevent layout shift */
+        /* ============================================================
+             RESET CSS & STYLING DASAR
+             ============================================================
+             Mengatur ulang default browser dan menetapkan font dasar
+        ============================================================ */
+        /* Memaksa scrollbar vertikal untuk konsistensi tampilan */
         html { overflow-y: scroll; }
-        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Nunito', sans-serif; }
-        body { background: var(--bg-body); color: var(--text-dark); display: flex; flex-direction: column; min-height: 100vh; }
+        * {
+            margin:0; padding:0; box-sizing:border-box;
+            font-family: 'Nunito', sans-serif;  /* Font utama aplikasi */
+        }
+        body {
+            background: var(--bg-body);           /* Background halaman */
+            color: var(--text-dark);              /* Warna teks default */
+            display: flex; flex-direction: column; /* Layout flexbox vertikal */
+            min-height: 100vh;                    /* Minimal tinggi viewport penuh */
+        }
 
-        /* HEADER & NAVBAR & SIDEBAR (COPIED FROM DASHBOARD FOR CONSISTENCY) */
+        /* ============================================================
+             HEADER, NAVBAR & SIDEBAR
+             ============================================================
+             Styling yang sama dengan dashboard untuk konsistensi UI/UX
+        ============================================================ */
         /* 1. HEADER - Colorful & Glassy */
         .app-header {
             height: var(--header-height);
@@ -238,6 +275,13 @@
         <div class="menu-title">Laporan</div>
         <a href="<?= base_url('laporan') ?>" class="menu-item"><i class='bx bxs-pie-chart-alt-2'></i> Laporan</a>
         <a href="<?= base_url('logout') ?>" class="menu-item" style="color:#f43f5e;"><i class='bx bxs-log-out'></i> Logout</a>
+
+        <!-- Copyright text di bagian bawah sidebar -->
+        <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); text-align: center; color: #94a3b8; font-size: 0.8rem; font-weight: 600; line-height: 1.2;">
+            @2026<br>
+            Manajemen Inventaris<br>
+            Gudang Toko HP
+        </div>
     </aside>
 
     <!-- NAVBAR (BREADCRUMB) -->
