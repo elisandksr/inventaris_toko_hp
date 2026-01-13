@@ -7,6 +7,7 @@ use App\Models\TransaksiModel;
 use App\Models\BarangModel;
 use App\Models\SupplierModel;
 
+// Controller Transaksi: Mengelola Barang Masuk & Keluar
 class Transaksi extends BaseController
 {
     protected $transaksiModel;
@@ -20,9 +21,7 @@ class Transaksi extends BaseController
         $this->supplierModel = new SupplierModel();
     }
 
-    /**
-     * BARANG MASUK - Menampilkan form dan riwayat
-     */
+    // BARANG MASUK: Tampilkan form & riwayat
     public function masuk()
     {
         $data = [
@@ -33,9 +32,7 @@ class Transaksi extends BaseController
         return view('transaksi_masuk_view', $data);
     }
 
-    /**
-     * BARANG KELUAR - Menampilkan form dan riwayat
-     */
+    // BARANG KELUAR: Tampilkan form & riwayat
     public function keluar()
     {
         $data = [
@@ -45,10 +42,7 @@ class Transaksi extends BaseController
         return view('transaksi_keluar_view', $data);
     }
 
-    /**
-     * PROSES BARANG MASUK
-     * Logika: Tambah transaksi + Update stok barang
-     */
+    // PROSES MASUK: Simpan & Update Stok
     public function prosesMasuk()
     {
         $barang_id = $this->request->getVar('barang_id');
@@ -92,10 +86,7 @@ class Transaksi extends BaseController
         return redirect()->to('/transaksi/masuk')->with('success', "Barang masuk berhasil dicatat. Stok {$barang['nama_hp']} bertambah {$jumlah} unit.");
     }
 
-    /**
-     * PROSES BARANG KELUAR
-     * Logika: Tambah transaksi + Update stok barang
-     */
+    // PROSES KELUAR: Simpan & Kurangi Stok
     public function prosesKeluar()
     {
         $barang_id = $this->request->getVar('barang_id');

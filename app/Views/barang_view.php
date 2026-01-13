@@ -244,6 +244,7 @@
             Inventory Toko HP Amelia & Elis
         </div>
         
+        <!-- Form Pencarian Barang (Method GET) -->
         <form action="<?= base_url('barang') ?>" method="get" class="search-box">
             <input type="text" name="q" placeholder="Cari data barang..." value="<?= isset($keyword) ? $keyword : '' ?>">
             <i class='bx bx-search'></i>
@@ -273,7 +274,9 @@
         
         
         <div class="menu-title">Laporan</div>
+        <!-- Link ke Laporan -->
         <a href="<?= base_url('laporan') ?>" class="menu-item"><i class='bx bxs-pie-chart-alt-2'></i> Laporan</a>
+        <!-- Link Logout -->
         <a href="<?= base_url('logout') ?>" class="menu-item" style="color:#f43f5e;"><i class='bx bxs-log-out'></i> Logout</a>
 
         <!-- Copyright text di bagian bawah sidebar -->
@@ -287,6 +290,10 @@
     <!-- NAVBAR (BREADCRUMB) -->
     <nav class="app-navbar">
         <div class="breadcrumb">
+    <!-- NAVBAR (BREADCRUMB) -->
+    <nav class="app-navbar">
+        <div class="breadcrumb">
+            <!-- Link Breadcrumb -->
             <a href="<?= base_url('dashboard') ?>"><i class='bx bxs-home-smile'></i> Dashboard</a>
             <i class='bx bx-chevron-right'></i>
             <span style="color: var(--text-gray); font-weight: 600;">Master Data</span>
@@ -294,10 +301,13 @@
             <span>Data Barang</span>
         </div>
     </nav>
+        </div>
+    </nav>
 
     <!-- MAIN CONTENT -->
     <main class="main-content">
         <!-- ALERTS -->
+        <!-- Cek Flash Message Sukses (Alert) -->
         <?php if(session()->getFlashdata('success')): ?>
             <div style="background: #ecfdf5; color: #047857; padding: 1rem; border-radius: 12px; margin-bottom: 2rem; border: 1px solid #a7f3d0; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
                 <i class='bx bxs-check-circle'></i> <?= session()->getFlashdata('success') ?>
@@ -311,6 +321,7 @@
                 <p>Khusus input data master handphone baru ke dalam sistem</p>
             </div>
             <div class="header-actions">
+                <!-- Tombol Buka Modal Tambah -->
                 <button class="btn btn-primary" onclick="openModal()">
                     <i class='bx bx-plus'></i> Tambah Data
                 </button>
@@ -334,10 +345,13 @@
                             <th>Aksi</th>
                         </tr>
                     </thead>
+                    </thead>
                     <tbody>
+                        <!-- Loop Data Barang dari Database -->
                         <?php foreach($barang as $item): ?>
                         <tr>
                             <td>
+                                <!-- Menampilkan Kode Barang & IMEI -->
                                 <span style="font-family:'Courier New'; background:#e0e7ff; color:#4338ca; padding:2px 6px; border-radius:4px; font-weight:700;"><?= $item['kode_barang'] ?></span>
                                 <?php if(!empty($item['imei'])): ?>
                                     <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">IMEI: <?= $item['imei'] ?></div>
@@ -347,15 +361,18 @@
                             <td><?= $item['merek'] ?></td>
                             <td><?= !empty($item['lokasi_rak']) ? $item['lokasi_rak'] : '-' ?></td>
                             <td>
+                                <!-- Logika Cek Stok: Tampilkan Warning jika < 5 -->
                                 <?php if($item['stok'] < 5): ?>
                                     <span class="badge badge-low"><?= $item['stok'] ?> Warn!</span>
                                 <?php else: ?>
                                     <span style="font-weight:700;"><?= $item['stok'] ?> Unit</span>
                                 <?php endif; ?>
                             </td>
+                            <!-- Format Harga ke Rupiah -->
                             <td style="color:#d946ef; font-weight:700;">Rp <?= number_format($item['harga_beli'], 0, ',', '.') ?></td>
                             <td style="color:#059669; font-weight:700;">Rp <?= number_format($item['harga_jual'], 0, ',', '.') ?></td>
                             <td>
+                                <!-- Logika Status: Ready/Kosong -->
                                 <?php if($item['stok'] > 0): ?>
                                     <span class="badge badge-ready">Ready</span>
                                 <?php else: ?>
@@ -364,7 +381,9 @@
                             </td>
                             <td>
                                 <div style="display:flex; gap:0.5rem;">
+                                    <!-- Tombol Edit: Panggil JS editItem dengan data JSON -->
                                     <button class="btn-sm btn-edit" onclick='editItem(<?= json_encode($item) ?>)'><i class='bx bx-edit'></i></button>
+                                    <!-- Tombol Hapus: Link ke Controller dengan konfirmasi -->
                                     <a href="<?= base_url('barang/delete/'.$item['id']) ?>" class="btn-sm btn-delete" onclick="return confirm('Hapus data ini?')"><i class='bx bx-trash'></i></a>
                                 </div>
                             </td>
@@ -377,10 +396,11 @@
         </div>
     </main>
 
-    <!-- MODAL -->
+    <!-- MODAL FORM TAMBAH/EDIT BARANG -->
     <div class="modal" id="barangModal">
         <div class="modal-content">
             <h3 style="margin-bottom:1.5rem; font-size:1.5rem; color:var(--text-dark);" id="modalTitle">✨ Tambah Barang</h3>
+            <!-- Form Action: Kirim ke Barang::save (Insert/Update) -->
             <form action="<?= base_url('barang/save') ?>" method="post" id="barangForm">
                 <input type="hidden" name="id" id="itemId">
                 
@@ -437,6 +457,7 @@
                 </div>
 
                 <div style="text-align: right; margin-top: 2rem;">
+                    <!-- Tombol Batal & Submit -->
                     <button type="button" onclick="closeModal()" style="background:none; border:none; color:#64748b; font-weight:700; cursor:pointer; margin-right:1rem;">Batal</button>
                     <button type="submit" class="btn btn-primary" style="padding:0.7rem 2rem;">Simpan</button>
                 </div>
@@ -445,22 +466,26 @@
     </div>
 
     <script>
+    <script>
+        // Fungsi Buka Modal Tambah Barang
         function openModal() {
             document.getElementById('barangModal').classList.add('active');
             document.getElementById('modalTitle').innerText = '✨ Tambah Barang';
             document.getElementById('barangForm').reset();
             document.getElementById('itemId').value = '';
             
-            // Reset Stok Field (Enable)
+            // Reset Stok Field (Enable saat tambah baru)
             document.getElementById('stok').readOnly = false;
             document.getElementById('stok').style.backgroundColor = 'white';
             document.getElementById('stokMsg').style.display = 'none';
         }
 
+        // Fungsi Tutup Modal
         function closeModal() {
             document.getElementById('barangModal').classList.remove('active');
         }
 
+        // Fungsi Isi Data ke Modal (Edit Mode)
         function editItem(data) {
             openModal();
             document.getElementById('modalTitle').innerText = '✏️ Edit Barang';
@@ -474,12 +499,13 @@
             document.getElementById('stok').value = data.stok;
             document.getElementById('lokasiRak').value = data.lokasi_rak;
 
-            // Lock Stok Field (Disable)
+            // Kunci Field Stok (Disable saat edit, update lewat transaksi)
             document.getElementById('stok').readOnly = true;
             document.getElementById('stok').style.backgroundColor = '#f1f5f9';
             document.getElementById('stokMsg').style.display = 'block';
         }
 
+        // Tutup Modal jika klik di luar area konten
         window.onclick = function(e) {
             if(e.target == document.getElementById('barangModal')) closeModal();
         }

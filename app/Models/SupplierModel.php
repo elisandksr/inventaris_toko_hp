@@ -5,35 +5,21 @@ namespace App\Models;
 use CodeIgniter\Model;
 
 /**
- * Model untuk mengelola data supplier/pemasok barang dalam database
- * Menangani informasi contact dan statistik supplier
+ * Model untuk manajemen data supplier dan statistik transaksi
  */
 class SupplierModel extends Model
 {
-    // Nama tabel database
+    // Konfigurasi Tabel
     protected $table            = 'suppliers';
-
-    // Primary key tabel
     protected $primaryKey       = 'id';
+    
+    // Field yang diizinkan
+    protected $allowedFields    = ['nama_supplier', 'alamat', 'telepon', 'email'];
 
-    // Field-field yang boleh dimodifikasi
-    protected $allowedFields    = [
-        'nama_supplier',    // Nama perusahaan supplier
-        'alamat',          // Alamat lengkap supplier
-        'telepon',         // Nomor telepon contact
-        'email'            // Email untuk komunikasi
-    ];
-
-    // Menggunakan timestamps otomatis
+    // Timestamp otomatis
     protected $useTimestamps    = true;
 
-    /**
-     * Mengambil data supplier beserta statistik transaksi
-     * Menampilkan jumlah total transaksi yang pernah dilakukan supplier
-     * Berguna untuk mengetahui supplier mana yang paling aktif
-     *
-     * @return array Array of supplier data dengan field total_transaksi
-     */
+    // Ambil data supplier + total transaksi (LEFT JOIN)
     public function getSuppliersWithStats()
     {
         return $this->select('suppliers.*, COUNT(transaksi.id) as total_transaksi')

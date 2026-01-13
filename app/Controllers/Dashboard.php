@@ -13,29 +13,27 @@ class Dashboard extends BaseController
         $barangModel = new BarangModel();
         $transaksiModel = new TransaksiModel();
 
-        // 1. Basic Stats
+        // 1. Statistik Dasar (Barang & Stok)
         $total_barang = $barangModel->countAllResults();
         $total_stok = $barangModel->selectSum('stok')->get()->getRow()->stok ?? 0;
         
-        // 2. Low Stock Logic (Optimized)
-        // Definition: Stok < 5 unit is considered "Critical/Scientific" for Retail Phone Shop
+        // 2. Stok Menipis (< 5 unit)
         $threshold = 5; 
         $stok_menipis_count = $barangModel->where('stok <', $threshold)->countAllResults();
-        $stok_menipis_list = $barangModel->where('stok <', $threshold)->orderBy('stok', 'ASC')->findAll(5); // Get top 5 most critical
+        $stok_menipis_list = $barangModel->where('stok <', $threshold)->orderBy('stok', 'ASC')->findAll(5);
 
-        // 3. Financial Analysis (New Feature for Owner)
-        // Calculate Total Assets (Money tied in stock)
+        // 3. Analisis Aset (Total Harga Beli x Stok)
         $all_barang = $barangModel->findAll();
         $total_aset = 0;
         foreach ($all_barang as $b) {
             $total_aset += ($b['harga_beli'] * $b['stok']);
         }
 
-        // 4. Daily Activity
+        // 4. Aktivitas Hari Ini
         $transaksi_masuk = $transaksiModel->where('jenis', 'Masuk')->where('DATE(tanggal)', date('Y-m-d'))->countAllResults();
         $transaksi_keluar = $transaksiModel->where('jenis', 'Keluar')->where('DATE(tanggal)', date('Y-m-d'))->countAllResults();
 
-        // 5. Recent History
+        // 5. Riwayat Aktivitas Terbaru
         $recent_activities = $transaksiModel->select('transaksi.*, barang.nama_hp, barang.merek')
                                             ->join('barang', 'barang.id = transaksi.barang_id')
                                             ->orderBy('transaksi.created_at', 'DESC')

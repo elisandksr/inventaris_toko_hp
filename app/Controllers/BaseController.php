@@ -8,15 +8,8 @@ use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
 /**
- * BaseController provides a convenient place for loading components
- * and performing functions that are needed by all your controllers.
- *
- * Extend this class in any new controllers:
- * ```
- *     class Home extends BaseController
- * ```
- *
- * For security, be sure to declare any new methods as protected or private.
+ * BaseController: Kontroller dasar yang mewarisi semua Controller
+ * Tempat memuat helper, model, atau library global
  */
 abstract class BaseController extends Controller
 {
@@ -39,7 +32,7 @@ abstract class BaseController extends Controller
         // Caution: Do not edit this line.
         parent::initController($request, $response, $logger);
 
-        // Preload any models, libraries, etc, here.
+        // Preload model/library global disini
         // $this->session = service('session');
     }
 }

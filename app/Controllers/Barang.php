@@ -5,10 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\BarangModel;
 
-/**
- * Controller untuk mengelola data barang (handphone) dalam sistem inventaris
- * Menangani CRUD operations: Create, Read, Update, Delete data barang
- */
+// Controller Data Barang: CRUD (Create, Read, Update, Delete)
 class Barang extends BaseController
 {
     protected $barangModel;
@@ -21,23 +18,19 @@ class Barang extends BaseController
         $this->barangModel = new BarangModel();
     }
 
-    /**
-     * Menampilkan halaman list data barang dengan fitur pencarian
-     * GET /barang - menampilkan semua data barang
-     * GET /barang?q=keyword - pencarian berdasarkan nama, kode, atau IMEI
-     */
+    // Tampilkan daftar barang (support pencarian)
     public function index()
     {
         $keyword = $this->request->getVar('q');
 
         if ($keyword) {
-            // Pencarian fleksibel berdasarkan nama HP, kode barang, atau IMEI
+            // Filter berdasarkan: Nama, Kode, atau IMEI
             $barang = $this->barangModel->like('nama_hp', $keyword)
                         ->orLike('kode_barang', $keyword)
                         ->orLike('imei', $keyword)
                         ->findAll();
         } else {
-            // Tampilkan semua data barang jika tidak ada keyword pencarian
+            // Ambil semua data
             $barang = $this->barangModel->findAll();
         }
 
@@ -49,11 +42,7 @@ class Barang extends BaseController
         return view('barang_view', $data);
     }
 
-    /**
-     * Menyimpan data barang baru atau update data yang sudah ada
-     * POST /barang/save - untuk create/update data barang
-     * Jika ada parameter 'id' maka update, jika tidak maka create baru
-     */
+    // Simpan data (Tambah baru atau Update)
     public function save()
     {
         $id = $this->request->getVar('id');
@@ -84,10 +73,7 @@ class Barang extends BaseController
         return redirect()->to('/barang')->with('success', $msg);
     }
 
-    /**
-     * Menghapus data barang berdasarkan ID
-     * DELETE /barang/delete/{id} - menghapus data barang tertentu
-     */
+    // Hapus data berdasarkan ID
     public function delete($id)
     {
         $this->barangModel->delete($id);

@@ -7,6 +7,7 @@ use App\Models\BarangModel;
 use App\Models\TransaksiModel;
 use App\Models\SupplierModel;
 
+// Controller Laporan: Menghasilkan berbagai laporan (Stok, Transaksi, Keuangan)
 class Laporan extends BaseController
 {
     protected $barangModel;
@@ -20,9 +21,7 @@ class Laporan extends BaseController
         $this->supplierModel = new SupplierModel();
     }
 
-    /**
-     * Halaman utama laporan dengan berbagai tab
-     */
+    // Halaman utama laporan (semua tab)
     public function index()
     {
         try {
@@ -45,9 +44,7 @@ class Laporan extends BaseController
     }
 
 
-    /**
-     * Laporan Stok Barang
-     */
+    // Helper: Laporan Stok
     public function stok()
     {
         $data = [
@@ -58,9 +55,7 @@ class Laporan extends BaseController
         return view('laporan_stok_view', $data);
     }
 
-    /**
-     * Laporan Transaksi Lengkap
-     */
+    // Helper: Laporan Transaksi
     public function transaksi()
     {
         $data = [
@@ -71,9 +66,7 @@ class Laporan extends BaseController
         return view('laporan_transaksi_view', $data);
     }
 
-    /**
-     * Laporan Keuangan
-     */
+    // Helper: Laporan Keuangan
     public function keuangan()
     {
         $data = [
@@ -84,9 +77,7 @@ class Laporan extends BaseController
         return view('laporan_keuangan_view', $data);
     }
 
-    /**
-     * Laporan Supplier
-     */
+    // Helper: Laporan Supplier
     public function supplier()
     {
         $data = [

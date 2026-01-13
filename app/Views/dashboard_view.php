@@ -1,12 +1,4 @@
-<!-- =================================================================
-     DASHBOARD - HALAMAN UTAMA APLIKASI INVENTARIS TOKO HP
-     =================================================================
-     File ini merupakan tampilan utama dashboard yang menampilkan:
-     - Ringkasan statistik inventaris (total barang, stok, aset)
-     - Peringatan stok menipis
-     - Log aktivitas terakhir hari ini
-     - Navigasi sidebar untuk semua fitur aplikasi
-===================================================================== -->
+<!-- DASHBOARD - Tampilan utama statistik dan navigasi -->
 
 <!DOCTYPE html>
 <html lang="id">
@@ -22,16 +14,9 @@
     <!-- Google Fonts - Font custom untuk tampilan yang menarik -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- ========================================================
-         CSS INTERNAL - STYLING KHUSUS DASHBOARD
-         ======================================================== -->
+    <!-- CSS INTERNAL -->
     <style>
-        /* ============================================================
-             VARIABEL CSS GLOBAL - PALET WARNA & DIMENSI
-             ============================================================
-             Menggunakan CSS Custom Properties untuk konsistensi warna
-             dan memudahkan perubahan tema di masa depan
-        ============================================================ */
+        /* VARIABEL CSS GLOBAL */
         :root {
             /* Palet Warna Utama - Menggunakan gradient untuk tampilan modern */
             --primary: #6366f1;                    /* Biru utama */
@@ -49,11 +34,7 @@
             --text-gray: #64748b;                 /* Warna teks sekunder */
         }
 
-        /* ============================================================
-             RESET CSS & STYLING DASAR
-             ============================================================
-             Mengatur ulang default browser dan menetapkan font dasar
-        ============================================================ */
+        /* RESET CSS */
         * {
             margin:0; padding:0; box-sizing:border-box;
             font-family: 'Nunito', sans-serif;  /* Font utama untuk seluruh aplikasi */
@@ -66,12 +47,7 @@
             min-height: 100vh;                    /* Minimal tinggi viewport penuh */
         }
         
-        /* ============================================================
-             1. HEADER - BAGIAN ATAS APLIKASI (WARNA-WARNI & EFEK KACA)
-             ============================================================
-             Header dengan efek glassmorphism dan gradient border
-             Berisi: Logo, Search Box, dan Info Profil User
-        ============================================================ */
+        /* 1. HEADER */
         .app-header {
             height: var(--header-height);         /* Tinggi header */
             background: rgba(255, 255, 255, 0.9); /* Background semi-transparan */
@@ -119,11 +95,7 @@
         }
         .avatar:hover { transform: scale(1.1) rotate(5deg); }
 
-        /* ============================================================
-             2. NAVBAR - NAVIGASI ATAS (DI BAWAH HEADER)
-             ============================================================
-             Navbar mini untuk navigasi halaman dalam dashboard
-        ============================================================ */
+        /* 2. NAVBAR */
         .app-navbar {
             height: 50px; background: white; border-bottom: 1px solid #e2e8f0;
             display: flex; align-items: center; padding: 0 2rem;
@@ -136,12 +108,7 @@
         }
         .nav-link:hover, .nav-link.active { color: #8b5cf6; } /* Hover effect ungu */
 
-        /* ============================================================
-             3. SIDEBAR - MENU NAVIGASI UTAMA (GRADIENT CERAH)
-             ============================================================
-             Sidebar kiri dengan menu navigasi lengkap aplikasi
-             Berisi: Dashboard, Master Data, Transaksi, Laporan, Logout
-        ============================================================ */
+        /* 3. SIDEBAR - MENU NAVIGASI */
         .app-sidebar {
             width: var(--sidebar-width);          /* Lebar sidebar */
             background: white;                    /* Background putih */
@@ -169,12 +136,7 @@
         }
         .menu-item i { font-size: 1.3rem; } /* Ukuran ikon menu */
 
-        /* ============================================================
-             4. KONTEN UTAMA - AREA DASHBOARD
-             ============================================================
-             Bagian utama yang menampilkan konten dashboard
-             Berisi: Hero section, Cards statistik, Detail stok, Aktivitas
-        ============================================================ */
+        /* 4. MAIN CONTENT */
         .main-content {
             margin-top: 120px;                   /* Jarak dari header */
             margin-left: var(--sidebar-width);   /* Memberi ruang untuk sidebar */
@@ -182,11 +144,7 @@
             flex: 1;                             /* Mengisi ruang tersisa */
         }
 
-        /* ============================================================
-             HERO SECTION & CARDS STATISTIK
-             ============================================================
-             Bagian atas dashboard dengan welcome message dan tombol CTA
-        ============================================================ */
+        /* HERO SECTION & CARDS */
         .hero {
             background: linear-gradient(120deg, #8b5cf6, #ec4899);  /* Background gradient ungu-pink */
             border-radius: 20px; padding: 3rem; color: white;        /* Styling rounded dan padding */
@@ -231,11 +189,6 @@
 </head>
 <body>
 
-    <!-- ============================================================
-         HEADER - BAGIAN ATAS APLIKASI
-         ============================================================
-         Berisi branding, search box, dan informasi profil user
-    ============================================================ -->
     <header class="app-header">
         <!-- Logo dan nama aplikasi dengan ikon toko -->
         <div class="brand">
@@ -243,7 +196,7 @@
             Inventory Toko HP Amelia & Elis
         </div>
 
-        <!-- Search box untuk pencarian global data barang dan supplier -->
+        <!-- Form Pencarian: Mengirim data ke BarangController -->
         <form action="<?= base_url('barang') ?>" method="get" class="search-box">
             <input type="text" name="q" placeholder="Cari data barang, supplier..." value="<?= isset($keyword) ? $keyword : '' ?>">
             <i class='bx bx-search'></i>
@@ -252,9 +205,8 @@
         <!-- Informasi profil user dan avatar -->
         <div class="profile">
             <div style="text-align:right;">
-                <!-- Nama admin dari session -->
+                <!-- Menampilkan Nama Admin dari Session -->
                 <div style="font-weight:700; font-size:0.95rem; color: #1e293b;"><?= session()->get('nama_admin') ?></div>
-                <!-- Role/posisi user -->
                 <div style="font-size:0.75rem; color:#d946ef; font-weight:700;">Owner & Admin</div>
             </div>
             <!-- Avatar dengan ikon wajah -->
@@ -262,43 +214,35 @@
         </div>
     </header>
 
-    <!-- ============================================================
-         NAVBAR - NAVIGASI MINI ATAS
-         ============================================================
-         Navigasi halaman dalam dashboard (Dashboard & About)
-    ============================================================ -->
+    <!-- Navbar: Navigasi Cepat -->
     <nav class="app-navbar">
+        <!-- Link ke Method Dashboard::index -->
         <a href="<?= base_url('dashboard') ?>" class="nav-link active"><i class='bx bxs-home-smile'></i> Dashboard</a>
+        <!-- Link ke Halaman About -->
         <a href="<?= base_url('about') ?>" class="nav-link"><i class='bx bxs-heart'></i> About Me</a>
     </nav>
 
-    <!-- ============================================================
-         SIDEBAR - MENU NAVIGASI UTAMA
-         ============================================================
-         Menu navigasi lengkap dengan pengelompokan:
-         - Dashboard (halaman aktif)
-         - Master Data: Data Barang, Supplier
-         - Transaksi: Barang Masuk, Barang Keluar
-         - Laporan: Laporan, Logout
-    ============================================================ -->
     <aside class="app-sidebar">
         <!-- Menu Dashboard (aktif) -->
         <a href="<?= base_url('dashboard') ?>" class="menu-item active"><i class='bx bxs-dashboard'></i> Dashboard</a>
 
         <!-- Grup Master Data -->
         <div class="menu-title">Master Data</div>
+        <!-- Link ke BarangController -->
         <a href="<?= base_url('barang') ?>" class="menu-item"><i class='bx bxs-component'></i> Data Barang</a>
+        <!-- Link ke SupplierController -->
         <a href="<?= base_url('supplier') ?>" class="menu-item"><i class='bx bxs-truck'></i> Supplier</a>
 
         <!-- Grup Transaksi -->
         <div class="menu-title">Transaksi</div>
+        <!-- Link ke TransaksiController (Masuk & Keluar) -->
         <a href="<?= base_url('transaksi/masuk') ?>" class="menu-item"><i class='bx bxs-down-arrow-square'></i> Barang Masuk</a>
         <a href="<?= base_url('transaksi/keluar') ?>" class="menu-item"><i class='bx bxs-up-arrow-square'></i> Barang Keluar</a>
 
         <!-- Grup Laporan -->
         <div class="menu-title">Laporan</div>
         <a href="<?= base_url('laporan') ?>" class="menu-item"><i class='bx bxs-pie-chart-alt-2'></i> Laporan</a>
-        <!-- Menu Logout dengan warna merah untuk peringatan -->
+        <!-- Link ke AuthController::logout untuk menghapus sesi -->
         <a href="<?= base_url('logout') ?>" class="menu-item" style="color:#f43f5e;"><i class='bx bxs-log-out'></i> Logout</a>
 
         <!-- Copyright text di bagian bawah sidebar -->
@@ -309,21 +253,9 @@
         </div>
     </aside>
 
-    <!-- ============================================================
-         KONTEN UTAMA DASHBOARD
-         ============================================================
-         Area utama yang menampilkan:
-         - Hero section dengan salam dan tombol
-         - 4 Cards statistik (Total Barang, Stok, Aset, Restock)
-         - 2 Kolom detail (Stok Menipis & Aktivitas Terakhir)
-    ============================================================ -->
+    <!-- KONTEN UTAMA DASHBOARD -->
     <main class="main-content">
-        <!-- ============================================================
-             HERO SECTION - BAGIAN ATAS DASHBOARD
-             ============================================================
-             Menampilkan salam personal dan tombol Call-to-Action
-             untuk mengarahkan user ke fitur input barang masuk
-        ============================================================ -->
+        <!-- HERO SECTION -->
         <div class="hero">
             <div>
                 <!-- Salam personal dengan nama admin dari session -->
@@ -339,14 +271,9 @@
             </a>
         </div>
 
-        <!-- ============================================================
-             CARDS STATISTIK - RINGKASAN DATA INVENTARIS
-             ============================================================
-             Grid 4 kolom menampilkan statistik utama:
-             1. Total Jenis HP, 2. Total Unit, 3. Total Aset, 4. Perlu Restock
-        ============================================================ -->
+        <!-- CARDS STATISTIK -->
         <div class="dashboard-grid">
-            <!-- Card 1: Total Jenis HP (berdasarkan data unik) -->
+            <!-- Card 1: Menampilkan Variabel $total_barang dari Controller -->
             <div class="card">
                 <div class="card-icon c-purple"><i class='bx bxs-mobile'></i></div>
                 <div>
@@ -355,7 +282,7 @@
                 </div>
             </div>
 
-            <!-- Card 2: Total Unit/Stok semua barang -->
+            <!-- Card 2: Menampilkan Total Stok -->
             <div class="card">
                 <div class="card-icon c-blue"><i class='bx bxs-layer'></i></div>
                 <div>
@@ -377,31 +304,21 @@
                 </div>
             </div>
 
-            <!-- Card 4: Jumlah barang yang stoknya < 5 unit (clickable) -->
+            <!-- Card 4: Logika Klik scroll ke bagian warning -->
             <div class="card" onclick="document.getElementById('stok-warning-section').scrollIntoView({behavior: 'smooth'})" style="cursor: pointer;">
                 <div class="card-icon c-orange"><i class='bx bxs-error'></i></div>
                 <div>
+                    <!-- Menampilkan jumlah barang stok menipis -->
                     <div class="stat-value"><?= $stok_menipis_count ?></div>
                     <div class="stat-label">Perlu Restock</div>
                 </div>
             </div>
         </div>
 
-        <!-- ============================================================
-             DETAIL SECTION - LAYOUT 2 KOLOM
-             ============================================================
-             Menampilkan informasi detail dalam 2 kolom:
-             Kiri: Daftar barang stok menipis
-             Kanan: Log aktivitas transaksi hari ini
-        ============================================================ -->
+        <!-- DETAIL SECTION (2 KOLOM) -->
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-top: 2.5rem;">
 
-            <!-- ============================================================
-                 KOLOM KIRI: DETAIL BARANG STOK MENIPIS
-                 ============================================================
-                 Menampilkan daftar barang yang stoknya kurang dari 5 unit
-                 dengan informasi nama HP, merek, dan jumlah stok saat ini
-            ============================================================ -->
+            <!-- KOLOM KIRI: WARNING STOK -->
             <div id="stok-warning-section" style="background: white; padding: 1.5rem; border-radius: 20px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                     <h3 style="font-size: 1.2rem; display: flex; align-items: center; gap: 0.5rem;">
@@ -410,8 +327,10 @@
                     <a href="<?= base_url('laporan') ?>" style="font-size: 0.85rem; color: #6366f1; text-decoration: none; font-weight: 700;">Lihat Semua &rarr;</a>
                 </div>
 
+                <!-- Logika IF: Cek apakah ada data stok menipis -->
                 <?php if(!empty($stok_menipis_list)): ?>
                     <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <!-- Perulangan Foreach untuk menampilkan setiap barang -->
                         <?php foreach($stok_menipis_list as $item): ?>
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: #fffbeb; border-radius: 12px; border: 1px solid #fcd34d;">
                                 <div>
@@ -433,12 +352,7 @@
                 <?php endif; ?>
             </div>
 
-            <!-- ============================================================
-                 KOLOM KANAN: LOG AKTIVITAS TERAKHIR
-                 ============================================================
-                 Menampilkan 5 aktivitas transaksi terakhir hari ini
-                 dengan informasi waktu, jenis transaksi, dan jumlah
-            ============================================================ -->
+            <!-- KOLOM KANAN: LEADERBOARD AKTIVITAS -->
             <div style="background: white; padding: 1.5rem; border-radius: 20px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                     <h3 style="font-size: 1.2rem; display: flex; align-items: center; gap: 0.5rem;">
@@ -448,15 +362,19 @@
                 </div>
 
                 <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <!-- Logika IF: Cek ketersediaan aktivitas terbaru -->
                     <?php if(!empty($recent_activities)): ?>
+                        <!-- Perulangan menampilkan history transaksi -->
                         <?php foreach($recent_activities as $act): ?>
                             <div style="display: flex; align-items: center; gap: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #f1f5f9;">
                                 <div style="
                                     width: 40px; height: 40px; border-radius: 10px; 
                                     display: flex; align-items: center; justify-content: center;
                                     font-size: 1.2rem; color: white;
+                                    <!-- Logika Ternary: Warna background hijau (Masuk) atau merah (Keluar) -->
                                     background: <?= $act['jenis'] == 'Masuk' ? '#10b981' : '#ef4444' ?>;
                                 ">
+                                    <!-- Logika Ternary: Pilih Icon Panah -->
                                     <i class='bx <?= $act['jenis'] == 'Masuk' ? 'bxs-down-arrow-circle' : 'bxs-up-arrow-circle' ?>'></i>
                                 </div>
                                 <div style="flex: 1;">

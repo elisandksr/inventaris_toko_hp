@@ -326,6 +326,7 @@
     </style>
 </head>
 <body>
+    <!-- Cek Error (Misal error DB connection) -->
     <?php if(isset($error)): ?>
         <div style="max-width:800px; margin:50px auto; padding:20px; background:white; border-radius:12px; box-shadow:0 4px 6px rgba(0,0,0,0.1); font-family:'Nunito', sans-serif;">
             <h1 style="color:#ef4444; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem;"><i class='bx bxs-error-circle'></i> Terjadi Kesalahan</h1>
@@ -371,7 +372,9 @@
         
         
         <div class="menu-title">Laporan</div>
+        <!-- Link ke Laporan (Aktif) -->
         <a href="<?= base_url('laporan') ?>" class="menu-item active"><i class='bx bxs-pie-chart-alt-2'></i> Laporan</a>
+        <!-- Link Logout -->
         <a href="<?= base_url('logout') ?>" class="menu-item" style="color:#f43f5e;"><i class='bx bxs-log-out'></i> Logout</a>
 
         <!-- Copyright text di bagian bawah sidebar -->
@@ -385,6 +388,7 @@
     <!-- NAVBAR (BREADCRUMB) -->
     <nav class="app-navbar">
         <div class="breadcrumb">
+            <!-- Link Breadcrumb -->
             <a href="<?= base_url('dashboard') ?>"><i class='bx bxs-home-smile'></i> Dashboard</a>
             <i class='bx bx-chevron-right'></i>
             <span>Laporan</span>
@@ -403,12 +407,14 @@
         </div>
 
         <!-- STATS CARDS -->
+        <!-- STATS CARDS RINGKASAN DATA -->
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-icon" style="background: var(--primary-gradient);">
                     <i class='bx bx-mobile'></i>
                 </div>
                 <div class="stat-info">
+                    <!-- Total Varian Barang -->
                     <div class="stat-value"><?= $total_barang ?></div>
                     <div class="stat-label">Jenis HP</div>
                 </div>
@@ -418,6 +424,7 @@
                     <i class='bx bx-layer'></i>
                 </div>
                 <div class="stat-info">
+                    <!-- Total Stok Unit Keseluruhan -->
                     <div class="stat-value"><?= $total_stok ?></div>
                     <div class="stat-label">Total Unit</div>
                 </div>
@@ -427,6 +434,7 @@
                     <i class='bx bx-trending-up'></i>
                 </div>
                 <div class="stat-info">
+                    <!-- Total Transaksi Masuk -->
                     <div class="stat-value"><?= $total_transaksi_masuk ?></div>
                     <div class="stat-label">Transaksi Masuk</div>
                 </div>
@@ -436,6 +444,7 @@
                     <i class='bx bx-trending-down'></i>
                 </div>
                 <div class="stat-info">
+                    <!-- Total Transaksi Keluar -->
                     <div class="stat-value"><?= $total_transaksi_keluar ?></div>
                     <div class="stat-label">Transaksi Keluar</div>
                 </div>
@@ -443,8 +452,10 @@
         </div>
 
         <!-- TABS -->
+        <!-- TABS NAVIGASI LAPORAN -->
         <div class="tabs">
             <div class="tab-buttons">
+                <!-- Tombol Switch Tab (JS) -->
                 <button class="tab-btn active" onclick="showTab('stok')">📦 Stok Barang</button>
                 <button class="tab-btn" onclick="showTab('transaksi')">🔄 Riwayat Transaksi</button>
                 <button class="tab-btn" onclick="showTab('keuangan')">💰 Laporan Keuangan</button>
@@ -455,6 +466,7 @@
             <div id="stok" class="tab-content active">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <h3 style="margin: 0; color: var(--text-dark);">Laporan Stok Barang</h3>
+                    <!-- Tombol Export Excel -->
                     <a href="<?= base_url('laporan/exportStok') ?>" class="btn btn-success">
                         <i class='bx bx-download'></i> Export Excel
                     </a>
@@ -473,15 +485,18 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <!-- Loop Data Laporan Stok -->
                             <?php foreach ($laporan_stok as $item): ?>
                                 <tr>
                                     <td><strong><?= $item['kode_barang'] ?></strong></td>
                                     <td><?= $item['nama_hp'] ?></td>
                                     <td><?= $item['merek'] ?></td>
                                     <td><strong><?= $item['stok'] ?> unit</strong></td>
+                                    <!-- Format Harga -->
                                     <td class="currency">Rp <?= number_format($item['harga_beli'], 0, ',', '.') ?></td>
                                     <td class="currency">Rp <?= number_format($item['harga_jual'], 0, ',', '.') ?></td>
                                     <td>
+                                        <!-- Cek Status Stok (Badge) -->
                                         <?php if ($item['stok'] > 5): ?>
                                             <span class="status-badge status-ready">Ready</span>
                                         <?php elseif ($item['stok'] > 0): ?>
@@ -501,6 +516,7 @@
             <div id="transaksi" class="tab-content">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <h3 style="margin: 0; color: var(--text-dark);">Riwayat Transaksi Lengkap</h3>
+                    <!-- Export Excel Transaksi -->
                     <a href="<?= base_url('laporan/exportTransaksi') ?>" class="btn btn-success">
                         <i class='bx bx-download'></i> Export Excel
                     </a>
@@ -519,10 +535,12 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <!-- Loop Data Riwayat Transaksi (Masuk & Keluar) -->
                             <?php foreach ($laporan_transaksi as $item): ?>
                                 <tr>
                                     <td><strong><?= date('d/m/Y', strtotime($item['tanggal'])) ?></strong></td>
                                     <td>
+                                        <!-- Cek Jenis Transaksi -->
                                         <?php if ($item['jenis'] == 'Masuk'): ?>
                                             <span style="color: #10b981; font-weight: 700;">📥 Masuk</span>
                                         <?php else: ?>
@@ -564,6 +582,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <!-- Loop + Hitung Total Keuangan secara Langsung -->
                             <?php
                             $total_modal = 0;
                             $total_nilai_jual = 0;
@@ -580,6 +599,7 @@
                                     <td><strong><?= $item['stok'] ?> unit</strong></td>
                                     <td class="currency">Rp <?= number_format($item['modal_total'], 0, ',', '.') ?></td>
                                     <td class="currency">Rp <?= number_format($item['nilai_jual_potensial'], 0, ',', '.') ?></td>
+                                    <!-- Warna Keuntungan (Hijau/Merah) -->
                                     <td class="currency <?= $item['keuntungan_potensial'] >= 0 ? 'profit' : 'loss' ?>">
                                         Rp <?= number_format($item['keuntungan_potensial'], 0, ',', '.') ?>
                                     </td>
@@ -589,6 +609,7 @@
                                 </tr>
                             <?php endforeach; ?>
                             <!-- TOTAL ROW -->
+                            <!-- BARIS TOTAL (SUMMARY) -->
                             <tr style="background: #f8fafc; border-top: 2px solid var(--primary);">
                                 <td colspan="4" style="font-weight: 800; text-align: right;">TOTAL:</td>
                                 <td class="currency" style="font-weight: 800;">Rp <?= number_format($total_modal, 0, ',', '.') ?></td>
@@ -596,6 +617,7 @@
                                 <td class="currency <?= $total_keuntungan >= 0 ? 'profit' : 'loss' ?>" style="font-weight: 800;">
                                     Rp <?= number_format($total_keuntungan, 0, ',', '.') ?>
                                 </td>
+                                <!-- Hitung Margin Rata-rata Total -->
                                 <td class="currency <?= $total_keuntungan >= 0 ? 'profit' : 'loss' ?>" style="font-weight: 800;">
                                     <?= $total_modal > 0 ? number_format(($total_keuntungan / $total_modal) * 100, 1) : 0 ?>%
                                 </td>
@@ -626,6 +648,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <!-- Loop Data Laporan Supplier -->
                             <?php foreach ($laporan_supplier as $supplier): ?>
                                 <tr>
                                     <td>
@@ -642,6 +665,7 @@
                                             <div><i class='bx bx-envelope'></i> <?= $supplier['email'] ?></div>
                                         <?php endif; ?>
                                     </td>
+                                    <!-- Statistik Supplier Data -->
                                     <td><strong style="color: var(--primary);"><?= $supplier['total_transaksi'] ?>x</strong></td>
                                     <td><strong><?= $supplier['total_unit'] ?> unit</strong></td>
                                     <td class="currency">Rp <?= number_format($supplier['total_nilai'], 0, ',', '.') ?></td>
@@ -657,6 +681,7 @@
     </main>
 
     <script>
+        // Fungsi JavaScript Manipulasi Tab (Show/Hide)
         function showTab(tabName) {
             // Hide all tab contents
             const tabContents = document.querySelectorAll('.tab-content');

@@ -351,6 +351,7 @@
             Inventory Toko HP Amelia & Elis
         </div>
         
+        <!-- Form Pencarian Supplier -->
         <form action="<?= base_url('supplier') ?>" method="get" class="search-box">
             <input type="text" name="q" placeholder="Cari data supplier..." value="<?= isset($keyword) ? $keyword : '' ?>">
             <i class='bx bx-search'></i>
@@ -394,6 +395,7 @@
     <!-- NAVBAR (BREADCRUMB) -->
     <nav class="app-navbar">
         <div class="breadcrumb">
+            <!-- Link Breadcrumb -->
             <a href="<?= base_url('dashboard') ?>"><i class='bx bxs-home-smile'></i> Dashboard</a>
             <i class='bx bx-chevron-right'></i>
             <span style="color: var(--text-gray); font-weight: 600;">Master Data</span>
@@ -405,6 +407,7 @@
     <!-- MAIN CONTENT -->
     <main class="main-content">
         <!-- ALERTS -->
+        <!-- Cek Flash Message Sukses -->
         <?php if (session()->getFlashdata('success')): ?>
             <div class="alert alert-success">
                 <i class='bx bx-check-circle'></i>
@@ -412,6 +415,7 @@
             </div>
         <?php endif; ?>
 
+        <!-- Cek Flash Message Error -->
         <?php if (session()->getFlashdata('error')): ?>
             <div class="alert alert-error">
                 <i class='bx bx-error-circle'></i>
@@ -426,10 +430,12 @@
                 <p>Kelola data supplier dan distributor untuk inventaris HP Anda</p>
             </div>
             <div class="header-actions">
+                <!-- Tombol Buka Modal Tambah -->
                 <button class="btn btn-primary" onclick="openModal()">
                     <i class='bx bx-plus'></i>
                     Tambah Supplier
                 </button>
+                <!-- Tombol Refresh Halaman -->
                 <button onclick="location.reload()" class="btn btn-success">
                     <i class='bx bx-refresh'></i>
                     Refresh
@@ -439,6 +445,7 @@
 
         <!-- SUPPLIERS GRID -->
         <div class="suppliers-grid">
+            <!-- Cek jika data kosong -->
             <?php if (empty($suppliers)): ?>
                 <div class="empty-state">
                     <i class='bx bx-truck'></i>
@@ -450,6 +457,7 @@
                     </button>
                 </div>
             <?php else: ?>
+                <!-- Loop Data Supplier -->
                 <?php foreach ($suppliers as $supplier): ?>
                     <div class="supplier-card">
                         <div class="supplier-header">
@@ -465,6 +473,7 @@
                             </div>
                         </div>
 
+                        <!-- Detail Informasi Supplier (Alamat, Telp, Email) -->
                         <div class="supplier-details">
                             <?php if ($supplier['alamat']): ?>
                                 <div class="detail-item">
@@ -489,10 +498,12 @@
                         </div>
 
                         <div class="supplier-actions">
+                            <!-- Tombol Edit: Panggil JS editSupplier -->
                             <button class="btn btn-small btn-edit" onclick='editSupplier(<?= json_encode($supplier) ?>)'>
                                 <i class='bx bx-edit'></i>
                                 Edit
                             </button>
+                            <!-- Tombol Hapus: Link dengan Konfirmasi -->
                             <a href="<?= base_url('supplier/delete/' . $supplier['id']) ?>"
                                onclick="return confirm('Yakin hapus supplier ini? Pastikan tidak ada transaksi yang terkait.')"
                                class="btn btn-small btn-delete">
@@ -508,10 +519,11 @@
     </main>
 
 
-    <!-- MODAL -->
+    <!-- MODAL FORM -->
     <div class="modal" id="supplierModal">
         <div class="modal-content">
             <h3 style="margin-bottom:1.5rem; font-size:1.5rem; color:var(--text-dark);" id="modalTitle">✨ Tambah Supplier</h3>
+            <!-- Form Action: Kirim ke Supplier::save -->
             <form action="<?= base_url('supplier/save') ?>" method="post" id="supplierForm">
                 <input type="hidden" name="id" id="supplierId">
                 
@@ -538,6 +550,7 @@
                 </div>
 
                 <div style="text-align: right; margin-top: 2rem;">
+                    <!-- Tombol Batal & Simpan -->
                     <button type="button" onclick="closeModal()" style="background:none; border:none; color:#64748b; font-weight:700; cursor:pointer; margin-right:1rem;">Batal</button>
                     <button type="submit" class="btn btn-primary" style="padding:0.7rem 2rem;">Simpan</button>
                 </div>
@@ -546,6 +559,7 @@
     </div>
 
     <script>
+        // Fungsi Buka Modal Tambah
         function openModal() {
             document.getElementById('supplierModal').classList.add('active');
             document.getElementById('modalTitle').innerText = '✨ Tambah Supplier';
@@ -553,10 +567,12 @@
             document.getElementById('supplierId').value = '';
         }
 
+        // Fungsi Tutup Modal
         function closeModal() {
             document.getElementById('supplierModal').classList.remove('active');
         }
 
+        // Fungsi Isi Data ke Modal (Edit Mode)
         function editSupplier(data) {
             openModal();
             document.getElementById('modalTitle').innerText = '✏️ Edit Supplier';
@@ -567,6 +583,7 @@
             document.getElementById('alamat').value = data.alamat;
         }
 
+        // Tutup Modal jika klik di luar
         window.onclick = function(e) {
             if(e.target == document.getElementById('supplierModal')) closeModal();
         }

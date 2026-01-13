@@ -56,10 +56,12 @@
         <h2>Admin Login</h2>
         <p>Silakan masuk untuk mengelola gudang ceria!</p>
         
+        <!-- Cek Flash Message Error (Login Gagal) -->
         <?php if(session()->getFlashdata('error')): ?>
             <div class="alert"><?= session()->getFlashdata('error') ?></div>
         <?php endif; ?>
 
+        <!-- Form Action: POST ke Auth::processLogin -->
         <form action="<?= base_url('login') ?>" method="post">
             <div class="form-group">
                 <input type="text" name="username" class="form-control" placeholder="Username" required>
@@ -67,6 +69,7 @@
             <div class="form-group">
                 <input type="password" name="password" class="form-control" placeholder="Password" required>
             </div>
+            <!-- Tombol Submit Login -->
             <button type="submit" class="btn-login">Mulai Beraktivitas <i class='bx bx-right-arrow-alt'></i></button>
         </form>
     </div>

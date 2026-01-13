@@ -419,6 +419,7 @@
     ============================================================ -->
     <nav class="app-navbar">
         <div class="breadcrumb">
+            <!-- Link Breadcrumb -->
             <a href="<?= base_url('dashboard') ?>"><i class='bx bxs-home-smile'></i> Dashboard</a>
             <i class='bx bx-chevron-right'></i>
             <span style="color: var(--text-gray); font-weight: 600;">Transaksi</span>
@@ -439,6 +440,7 @@
              Menampilkan pesan feedback dari operasi sebelumnya
         ============================================================ -->
         <!-- ALERTS -->
+        <!-- Cek Flash Message Sukses -->
         <?php if (session()->getFlashdata('success')): ?>
             <div class="alert alert-success">
                 <i class='bx bx-check-circle'></i>
@@ -446,6 +448,7 @@
             </div>
         <?php endif; ?>
 
+        <!-- Cek Flash Message Error -->
         <?php if (session()->getFlashdata('error')): ?>
             <div class="alert alert-error">
                 <i class='bx bx-error-circle'></i>
@@ -464,17 +467,18 @@
                 <div class="form-title">Input Barang Keluar</div>
             </div>
 
-            <!-- Form yang akan diproses oleh controller Transaksi/prosesKeluar -->
+            <!-- Form Action: Kirim data POST ke Transaksi::prosesKeluar -->
             <form action="<?= base_url('transaksi/prosesKeluar') ?>" method="post" id="formBarangKeluar">
-                <!-- Baris pertama: Pilih Barang dan Jumlah -->
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Pilih Barang HP</label>
                         <!-- Dropdown dengan data stok untuk validasi real-time -->
+                        <!-- Dropdown dengan data stok untuk validasi real-time -->
                         <select name="barang_id" class="form-control select" id="barangSelect" required>
                             <option value="">-- Pilih Barang --</option>
+                            <!-- Loop Data Barang -->
                             <?php foreach ($barang as $item): ?>
-                                <!-- Data attributes untuk JavaScript validation -->
+                                <!-- Simpan stok dan nama di atribut data-* untuk JS -->
                                 <option value="<?= $item['id'] ?>" data-stok="<?= $item['stok'] ?>" data-nama="<?= $item['nama_hp'] ?>">
                                     <?= $item['nama_hp'] ?> (<?= $item['merek'] ?>) - Stok: <?= $item['stok'] ?> unit
                                 </option>
@@ -522,6 +526,7 @@
                 </div>
 
                 <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <!-- Tombol Submit Form -->
                     <button type="submit" class="btn btn-warning">
                         <i class='bx bx-save'></i>
                         Simpan Transaksi
@@ -543,7 +548,7 @@
         <div class="table-card">
             <div class="table-header">
                 <div class="table-title">Riwayat Barang Keluar</div>
-                <!-- Counter total transaksi -->
+                <!-- Menampilkan Total Transaksi -->
                 <div style="font-size: 0.9rem; color: var(--text-gray);">
                     Total: <?= count($transaksi_keluar) ?> transaksi
                 </div>
@@ -562,6 +567,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <!-- Cek jika data kosong -->
                         <?php if (empty($transaksi_keluar)): ?>
                             <tr>
                                 <td colspan="6" style="text-align: center; color: var(--text-gray); padding: 3rem;">
@@ -570,11 +576,13 @@
                                 </td>
                             </tr>
                         <?php else: ?>
+                            <!-- Loop Data Transaksi -->
                             <?php foreach ($transaksi_keluar as $transaksi):
-                                // Get detailed info
+                                // Logika AMBIL (Filter) detail barang berdasarkan ID
                                 $barang_info = array_filter($barang, function($b) use ($transaksi) {
                                     return $b['id'] == $transaksi['barang_id'];
                                 });
+                                // Ambil elemen pertama
                                 $barang_info = reset($barang_info);
                             ?>
                                 <tr>
@@ -589,6 +597,7 @@
                                         </span>
                                     </td>
                                     <td>
+                                        <!-- Logika IF: Menampilkan Tujuan secara Rapi -->
                                         <?php
                                         $keterangan = $transaksi['keterangan'];
                                         if (strpos($keterangan, 'Penjualan') !== false) echo 'Penjualan';
@@ -600,6 +609,7 @@
                                     </td>
                                     <td><?= $transaksi['keterangan'] ?: '-' ?></td>
                                     <td>
+                                        <!-- Link Hapus dengan Konfirmasi -->
                                         <a href="<?= base_url('transaksi/delete/' . $transaksi['id']) ?>"
                                            onclick="return confirm('Yakin hapus transaksi ini? Stok akan dikembalikan.')"
                                            style="color: #dc2626; text-decoration: none;">
@@ -617,9 +627,11 @@
     </main>
 
     <script>
-        // JavaScript untuk validasi stok real-time
+        // Event Listener: Deteksi perubahan pada dropdown barang
         document.getElementById('barangSelect').addEventListener('change', function() {
+            // Ambil opsi yang dipilih
             const selectedOption = this.options[this.selectedIndex];
+            // Ambil data atribut dari opsi (stok & nama)
             const stok = parseInt(selectedOption.getAttribute('data-stok')) || 0;
             const namaBarang = selectedOption.getAttribute('data-nama') || '';
 
@@ -627,9 +639,11 @@
             const stockText = document.getElementById('stockText');
             const jumlahInput = document.getElementById('jumlahInput');
 
+            // Logika IF: Tampilan info stok jika barang tersedia
             if (stok > 0) {
                 stockText.innerHTML = `<strong>${namaBarang}</strong> - Stok tersedia: <strong>${stok} unit</strong>`;
                 stockInfo.style.display = 'flex';
+                // Set atribut 'max' pada input jumlah agar tidak melebihi stok
                 jumlahInput.max = stok;
             } else {
                 stockInfo.style.display = 'none';
@@ -637,14 +651,15 @@
             }
         });
 
-        // Validasi form sebelum submit
+        // Validasi Form sebelum dikirim (submit)
         document.getElementById('formBarangKeluar').addEventListener('submit', function(e) {
             const selectedOption = document.getElementById('barangSelect').options[document.getElementById('barangSelect').selectedIndex];
             const stok = parseInt(selectedOption.getAttribute('data-stok')) || 0;
             const jumlah = parseInt(document.getElementById('jumlahInput').value) || 0;
 
+            // Logika IF: Cegah kirim jika jumlah > stok
             if (jumlah > stok) {
-                e.preventDefault();
+                e.preventDefault(); // Batalkan submit form
                 alert('Jumlah keluar tidak boleh melebihi stok tersedia!');
                 return false;
             }

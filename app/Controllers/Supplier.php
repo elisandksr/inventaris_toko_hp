@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\SupplierModel;
 
+// Controller Supplier: Manajemen data pemasok (CRUD)
 class Supplier extends BaseController
 {
     protected $supplierModel;
@@ -14,9 +15,7 @@ class Supplier extends BaseController
         $this->supplierModel = new SupplierModel();
     }
 
-    /**
-     * Tampilkan daftar supplier
-     */
+    // Tampilkan daftar supplier
     public function index()
     {
         $keyword = $this->request->getVar('q');
@@ -38,17 +37,13 @@ class Supplier extends BaseController
         return view('supplier_view', $data);
     }
 
-    /**
-     * Form tambah supplier baru
-     */
+    // Form tambah supplier baru
     public function create()
     {
         return view('supplier_form_view');
     }
 
-    /**
-     * Simpan supplier baru
-     */
+    // Simpan supplier baru
     public function store()
     {
         $data = [
@@ -67,9 +62,7 @@ class Supplier extends BaseController
         return redirect()->to('/supplier')->with('success', 'Supplier berhasil ditambahkan.');
     }
 
-    /**
-     * Form edit supplier
-     */
+    // Form edit supplier
     public function edit($id)
     {
         $supplier = $this->supplierModel->find($id);
@@ -83,9 +76,7 @@ class Supplier extends BaseController
         return view('supplier_form_view', $data);
     }
 
-    /**
-     * Simpan data (Insert / Update) dari Modal
-     */
+    // Simpan data (Insert / Update) dari Modal
     public function save()
     {
         $id = $this->request->getVar('id');

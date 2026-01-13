@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+// Controller Utama (Default)
 class Home extends BaseController
 {
     public function index(): string

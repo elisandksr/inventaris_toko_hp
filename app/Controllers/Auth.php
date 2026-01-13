@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\AdminModel;
 
+// Controller Autentikasi: Login dan Logout
 class Auth extends BaseController
 {
     public function __construct()
@@ -12,6 +13,7 @@ class Auth extends BaseController
         helper(['form', 'url']);
     }
 
+    // Tampilkan halaman login
     public function login()
     {
         if (session()->get('is_admin_logged_in')) {
@@ -20,6 +22,7 @@ class Auth extends BaseController
         return view('login_view');
     }
 
+    // Proses login dan buat session
     public function processLogin()
     {
         $session = session();
@@ -51,6 +54,7 @@ class Auth extends BaseController
         }
     }
 
+    // Logout dan hapus session
     public function logout()
     {
         $session = session();

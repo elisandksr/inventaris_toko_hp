@@ -385,6 +385,7 @@
     <!-- NAVBAR (BREADCRUMB) -->
     <nav class="app-navbar">
         <div class="breadcrumb">
+            <!-- Link Navigasi Breadcrumb -->
             <a href="<?= base_url('dashboard') ?>"><i class='bx bxs-home-smile'></i> Dashboard</a>
             <i class='bx bx-chevron-right'></i>
             <span style="color: var(--text-gray); font-weight: 600;">Transaksi</span>
@@ -396,6 +397,7 @@
     <!-- MAIN CONTENT -->
     <main class="main-content">
         <!-- ALERTS -->
+        <!-- Cek Flash Message Sukses -->
         <?php if (session()->getFlashdata('success')): ?>
             <div class="alert alert-success">
                 <i class='bx bx-check-circle'></i>
@@ -403,6 +405,7 @@
             </div>
         <?php endif; ?>
 
+        <!-- Cek Flash Message Error -->
         <?php if (session()->getFlashdata('error')): ?>
             <div class="alert alert-error">
                 <i class='bx bx-error-circle'></i>
@@ -417,12 +420,15 @@
                 <div class="form-title">Input Barang Masuk</div>
             </div>
 
+            <!-- Form Action: Kirim data POST ke Transaksi::prosesMasuk -->
             <form action="<?= base_url('transaksi/prosesMasuk') ?>" method="post">
                 <div class="form-row">
+                    <!-- Dropdown Pilih Barang -->
                     <div class="form-group">
                         <label class="form-label">Pilih Barang HP</label>
                         <select name="barang_id" class="form-control select" required>
                             <option value="">-- Pilih Barang --</option>
+                            <!-- Loop Data Barang untuk Opsi Select -->
                             <?php foreach ($barang as $item): ?>
                                 <option value="<?= $item['id'] ?>">
                                     <?= $item['nama_hp'] ?> (<?= $item['merek'] ?>) - Stok: <?= $item['stok'] ?>
@@ -447,6 +453,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Jumlah Masuk</label>
+                        <!-- Input Jumlah (Min 1) -->
                         <input type="number" name="jumlah" class="form-control" placeholder="0" min="1" required>
                     </div>
 
@@ -464,6 +471,7 @@
                 </div>
 
                 <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <!-- Tombol Submit Form -->
                     <button type="submit" class="btn btn-primary">
                         <i class='bx bx-save'></i>
                         Simpan Transaksi
@@ -480,6 +488,7 @@
         <div class="table-card">
             <div class="table-header">
                 <div class="table-title">Riwayat Barang Masuk</div>
+                <!-- Menampilkan Total Transaksi (Count Array) -->
                 <div style="font-size: 0.9rem; color: var(--text-gray);">
                     Total: <?= count($transaksi_masuk) ?> transaksi
                 </div>
@@ -498,6 +507,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <!-- Cek jika data kosong -->
                         <?php if (empty($transaksi_masuk)): ?>
                             <tr>
                                 <td colspan="6" style="text-align: center; color: var(--text-gray); padding: 3rem;">
@@ -506,8 +516,9 @@
                                 </td>
                             </tr>
                         <?php else: ?>
+                            <!-- Loop Data Transaksi -->
                             <?php foreach ($transaksi_masuk as $transaksi):
-                                // Get detailed info
+                                // Logika pencarian detail barang berdasarkan ID
                                 $barang_info = array_filter($barang, function($b) use ($transaksi) {
                                     return $b['id'] == $transaksi['barang_id'];
                                 });
@@ -532,6 +543,7 @@
                                     </td>
                                     <td><?= $transaksi['keterangan'] ?: '-' ?></td>
                                     <td>
+                                        <!-- Link Hapus dengan Konfirmasi JS -->
                                         <a href="<?= base_url('transaksi/delete/' . $transaksi['id']) ?>"
                                            onclick="return confirm('Yakin hapus transaksi ini? Stok akan dikembalikan.')"
                                            style="color: #dc2626; text-decoration: none;">
