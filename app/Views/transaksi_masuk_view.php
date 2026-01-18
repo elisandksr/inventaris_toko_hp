@@ -21,11 +21,10 @@
         }
 
         * { margin:0; padding:0; box-sizing:border-box; font-family: 'Nunito', sans-serif; }
-        html { overflow-y: scroll; } /* Force Scrollbar for consistency */
+        html { overflow-y: scroll; } 
         body { background: var(--bg-body); color: var(--text-dark); display: flex; flex-direction: column; min-height: 100vh; }
 
         /* HEADER */
-        /* 1. HEADER - Colorful & Glassy */
         .app-header {
             height: var(--header-height);
             background: rgba(255, 255, 255, 0.9);
@@ -115,32 +114,11 @@
 
         /* MAIN CONTENT */
         .main-content {
-            margin-top: 120px; /* Header (70px) + Navbar (50px) */
+            margin-top: 120px; 
             margin-left: var(--sidebar-width);
             padding: 2rem;
             flex: 1;
         }
-
-        /* BREADCRUMB */
-        /* The original breadcrumb styling is now overridden by the new .breadcrumb within .app-navbar */
-        /* .breadcrumb {
-            background: white;
-            padding: 12px 24px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-        }
-        .breadcrumb a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-        .breadcrumb a:hover {
-            text-decoration: underline;
-        } */
 
         /* FORM CARD */
         .form-card {
@@ -355,7 +333,6 @@
         </div>
     </header>
 
-    <!-- SIDEBAR -->
   <!-- SIDEBAR -->
   <aside class="app-sidebar">
     <a href="<?= base_url('dashboard') ?>" class="menu-item"><i class='bx bxs-dashboard'></i> Dashboard</a>
@@ -557,7 +534,6 @@
                 </table>
             </div>
         </div>
-
     </main>
 
 </body>

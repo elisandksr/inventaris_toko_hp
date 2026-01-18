@@ -1,14 +1,3 @@
-<!-- =================================================================
-     HALAMAN DATA BARANG - MANAJEMEN INVENTARIS TOKO HP
-     =================================================================
-     File ini menampilkan dan mengelola data barang HP dengan fitur:
-     - Tabel daftar semua barang dengan detail lengkap
-     - Form tambah barang baru
-     - Modal edit dan hapus barang
-     - Pencarian dan filter data
-     - Peringatan stok rendah
-===================================================================== -->
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -22,10 +11,6 @@
 
     <!-- Google Fonts untuk typography -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- ========================================================
-         CSS INTERNAL - STYLING KHUSUS HALAMAN DATA BARANG
-         ======================================================== -->
     <style>
         :root {
             --primary: #6366f1;
@@ -38,30 +23,19 @@
             --text-gray: #64748b;
         }
 
-        /* ============================================================
-             RESET CSS & STYLING DASAR
-             ============================================================
-             Mengatur ulang default browser dan menetapkan font dasar
-        ============================================================ */
-        /* Memaksa scrollbar vertikal untuk konsistensi tampilan */
         html { overflow-y: scroll; }
         * {
             margin:0; padding:0; box-sizing:border-box;
-            font-family: 'Nunito', sans-serif;  /* Font utama aplikasi */
+            font-family: 'Nunito', sans-serif;  
         }
         body {
-            background: var(--bg-body);           /* Background halaman */
-            color: var(--text-dark);              /* Warna teks default */
-            display: flex; flex-direction: column; /* Layout flexbox vertikal */
-            min-height: 100vh;                    /* Minimal tinggi viewport penuh */
+            background: var(--bg-body);           
+            color: var(--text-dark);              
+            display: flex; flex-direction: column; 
+            min-height: 100vh;                   
         }
 
-        /* ============================================================
-             HEADER, NAVBAR & SIDEBAR
-             ============================================================
-             Styling yang sama dengan dashboard untuk konsistensi UI/UX
-        ============================================================ */
-        /* 1. HEADER - Colorful & Glassy */
+        /* 1. HEADER */
         .app-header {
             height: var(--header-height);
             background: rgba(255, 255, 255, 0.9);
@@ -147,13 +121,12 @@
 
         /* MAIN CONTENT */
         .main-content {
-            margin-top: 120px; /* Header (70px) + Navbar (50px) */
+            margin-top: 120px; 
             margin-left: var(--sidebar-width);
             padding: 2rem;
             flex: 1;
         }
-        
-        /* HEADER CARD */
+
         /* HEADER CARD */
         .header-card {
             background: white; border-radius: 20px; padding: 2rem;
@@ -181,17 +154,17 @@
         }
         .table th {
             background: #f8fafc;
-            padding: 0.75rem 1rem; /* Reduced padding */
+            padding: 0.75rem 1rem; 
             text-align: left;
             font-weight: 700;
             color: var(--text-dark);
             border-bottom: 2px solid #e2e8f0;
             text-transform: uppercase;
             font-size: 0.85rem;
-            white-space: nowrap; /* Prevent headers form wrapping, keeping height standard */
+            white-space: nowrap; /
         }
         .table td {
-            padding: 0.75rem 1rem; /* Reduced padding for shorter table */
+            padding: 0.75rem 1rem; 
             border-bottom: 1px solid #f1f5f9;
             vertical-align: middle;
         }
@@ -290,17 +263,12 @@
     <!-- NAVBAR (BREADCRUMB) -->
     <nav class="app-navbar">
         <div class="breadcrumb">
-    <!-- NAVBAR (BREADCRUMB) -->
-    <nav class="app-navbar">
-        <div class="breadcrumb">
             <!-- Link Breadcrumb -->
             <a href="<?= base_url('dashboard') ?>"><i class='bx bxs-home-smile'></i> Dashboard</a>
             <i class='bx bx-chevron-right'></i>
             <span style="color: var(--text-gray); font-weight: 600;">Master Data</span>
             <i class='bx bx-chevron-right'></i>
             <span>Data Barang</span>
-        </div>
-    </nav>
         </div>
     </nav>
 
@@ -345,7 +313,6 @@
                             <th>Aksi</th>
                         </tr>
                     </thead>
-                    </thead>
                     <tbody>
                         <!-- Loop Data Barang dari Database -->
                         <?php foreach($barang as $item): ?>
@@ -382,7 +349,7 @@
                             <td>
                                 <div style="display:flex; gap:0.5rem;">
                                     <!-- Tombol Edit: Panggil JS editItem dengan data JSON -->
-                                    <button class="btn-sm btn-edit" onclick='editItem(<?= json_encode($item) ?>)'><i class='bx bx-edit'></i></button>
+                                    <button class="btn-sm btn-edit" onclick='editItem(<?= htmlspecialchars(json_encode($item), ENT_QUOTES, "UTF-8") ?>)'><i class='bx bx-edit'></i></button>
                                     <!-- Tombol Hapus: Link ke Controller dengan konfirmasi -->
                                     <a href="<?= base_url('barang/delete/'.$item['id']) ?>" class="btn-sm btn-delete" onclick="return confirm('Hapus data ini?')"><i class='bx bx-trash'></i></a>
                                 </div>
@@ -391,7 +358,6 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-            </div>
             </div>
         </div>
     </main>
@@ -465,7 +431,6 @@
         </div>
     </div>
 
-    <script>
     <script>
         // Fungsi Buka Modal Tambah Barang
         function openModal() {

@@ -1,13 +1,3 @@
-<!-- =================================================================
-     HALAMAN TRANSAKSI BARANG KELUAR - INVENTARIS TOKO HP
-     =================================================================
-     File ini menangani pengeluaran barang dari gudang dengan fitur:
-     - Form input transaksi keluar (pilih barang, jumlah, keterangan)
-     - Validasi stok sebelum transaksi
-     - Riwayat transaksi keluar dalam tabel
-     - Peringatan jika stok tidak mencukupi
-===================================================================== -->
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -21,36 +11,25 @@
 
     <!-- Google Fonts untuk typography -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- ========================================================
-         CSS INTERNAL - STYLING KHUSUS HALAMAN BARANG KELUAR
-         ======================================================== -->
     <style>
-        /* ============================================================
-             VARIABEL CSS GLOBAL - PALET WARNA & DIMENSI
-             ============================================================
-             Variabel yang sama dengan dashboard untuk konsistensi
-             Ditambah warning-gradient untuk peringatan stok
-        ============================================================ */
         :root {
-            --primary: #6366f1;                    /* Warna utama biru */
+            --primary: #6366f1;                  
             --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
             --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%);
-            --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);  /* Gradient kuning-oranye untuk warning */
-            --bg-body: #f3f4f6;                   /* Background halaman */
+            --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); 
+            --bg-body: #f3f4f6;                  
             --glass-white: rgba(255, 255, 255, 0.95);
-            --sidebar-width: 260px;              /* Lebar sidebar */
-            --header-height: 70px;               /* Tinggi header */
-            --text-dark: #1e293b;                 /* Warna teks utama */
-            --text-gray: #64748b;                 /* Warna teks sekunder */
+            --sidebar-width: 260px;              
+            --header-height: 70px;              
+            --text-gray: #64748b;                 
+            --text-dark: #1e293b;                 
         }
 
         * { margin:0; padding:0; box-sizing:border-box; font-family: 'Nunito', sans-serif; }
-        html { overflow-y: scroll; } /* Force Scrollbar for consistency */
+        html { overflow-y: scroll; } 
         body { background: var(--bg-body); color: var(--text-dark); display: flex; flex-direction: column; min-height: 100vh; }
 
         /* HEADER */
-        /* 1. HEADER - Colorful & Glassy */
         .app-header {
             height: var(--header-height);
             background: rgba(255, 255, 255, 0.9);
@@ -141,7 +120,7 @@
 
         /* MAIN CONTENT */
         .main-content {
-            margin-top: 120px; /* Header (70px) + Navbar (50px) */
+            margin-top: 120px; 
             margin-left: var(--sidebar-width);
             padding: 2rem;
             flex: 1;
@@ -176,11 +155,6 @@
             color: var(--text-dark);
         }
 
-        /* ============================================================
-             STYLING FORM INPUT - UNTUK FORM TRANSAKSI KELUAR
-             ============================================================
-             Styling untuk form input barang keluar dengan fokus warna orange
-        ============================================================ */
         .form-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
@@ -189,7 +163,7 @@
         }
         .form-group {
             display: flex;
-            flex-direction: column;  /* Layout vertikal untuk label dan input */
+            flex-direction: column;  
         }
         .form-label {
             font-weight: 600;
@@ -206,17 +180,17 @@
             background: #f8fafc;
         }
         .form-control:focus {
-            border-color: #f59e0b;  /* Fokus dengan warna orange untuk konsistensi */
+            border-color: #f59e0b;  
             outline: none;
-            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);  /* Shadow orange */
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1); 
             background: white;
         }
         .form-control.select {
-            cursor: pointer;  /* Cursor pointer untuk dropdown */
+            cursor: pointer; 
         }
         textarea.form-control {
-            resize: vertical;  /* Resize vertikal saja untuk textarea */
-            min-height: 80px;  /* Tinggi minimum */
+            resize: vertical; 
+            min-height: 80px;  
         }
 
         /* STOCK INFO */
@@ -380,11 +354,7 @@
         </div>
     </header>
 
-  <!-- ============================================================
-         SIDEBAR - MENU NAVIGASI UTAMA
-         ============================================================
-         Menu navigasi dengan "Barang Keluar" dalam keadaan aktif
-    ============================================================ -->
+    <!-- SIDEBAR NAVIGATION -->
   <aside class="app-sidebar">
     <a href="<?= base_url('dashboard') ?>" class="menu-item"><i class='bx bxs-dashboard'></i> Dashboard</a>
         <div class="menu-title">Master Data</div>
@@ -411,12 +381,7 @@
         </div>
     </aside>
 
-    <!-- ============================================================
-         NAVBAR - BREADCRUMB NAVIGASI
-         ============================================================
-         Navigasi breadcrumb untuk menunjukkan posisi halaman saat ini
-         Dashboard > Transaksi > Barang Keluar
-    ============================================================ -->
+     <!-- Breadcrumb Navigation -->
     <nav class="app-navbar">
         <div class="breadcrumb">
             <!-- Link Breadcrumb -->
@@ -428,17 +393,8 @@
         </div>
     </nav>
 
-    <!-- ============================================================
-         KONTEN UTAMA - FORM & TABEL TRANSAKSI BARANG KELUAR
-         ============================================================
-         Berisi: Flash messages, Form input transaksi, Tabel riwayat
-    ============================================================ -->
+     <!-- KONTEN UTAMA -->
     <main class="main-content">
-        <!-- ============================================================
-             FLASH MESSAGES - PESAN SUKSES/ERROR
-             ============================================================
-             Menampilkan pesan feedback dari operasi sebelumnya
-        ============================================================ -->
         <!-- ALERTS -->
         <!-- Cek Flash Message Sukses -->
         <?php if (session()->getFlashdata('success')): ?>
@@ -456,11 +412,7 @@
             </div>
         <?php endif; ?>
 
-        <!-- ============================================================
-             FORM INPUT TRANSAKSI BARANG KELUAR
-             ============================================================
-             Form untuk mengeluarkan barang dari gudang dengan validasi stok
-        ============================================================ -->
+         <!-- Form Input Transaksi Keluar -->
         <div class="form-card">
             <div class="form-header">
                 <i class='bx bx-minus-circle'></i>  <!-- Ikon minus untuk menunjukkan pengeluaran -->
@@ -472,7 +424,6 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Pilih Barang HP</label>
-                        <!-- Dropdown dengan data stok untuk validasi real-time -->
                         <!-- Dropdown dengan data stok untuk validasi real-time -->
                         <select name="barang_id" class="form-control select" id="barangSelect" required>
                             <option value="">-- Pilih Barang --</option>
@@ -539,12 +490,7 @@
             </form>
         </div>
 
-        <!-- ============================================================
-             TABEL RIWAYAT TRANSAKSI BARANG KELUAR
-             ============================================================
-             Menampilkan semua transaksi keluar yang telah tercatat
-             dengan informasi lengkap dan opsi untuk mengedit/hapus
-        ============================================================ -->
+        <!-- Tabel Riwayat Transaksi Keluar -->
         <div class="table-card">
             <div class="table-header">
                 <div class="table-title">Riwayat Barang Keluar</div>
@@ -623,7 +569,6 @@
                 </table>
             </div>
         </div>
-
     </main>
 
     <script>

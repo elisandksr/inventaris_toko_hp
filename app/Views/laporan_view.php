@@ -23,11 +23,10 @@
         }
 
         * { margin:0; padding:0; box-sizing:border-box; font-family: 'Nunito', sans-serif; }
-        html { overflow-y: scroll; } /* Force Scrollbar for consistency */
+        html { overflow-y: scroll; } 
         body { background: var(--bg-body); color: var(--text-dark); display: flex; flex-direction: column; min-height: 100vh; }
 
         /* HEADER */
-        /* 1. HEADER - Colorful & Glassy */
         .app-header {
             height: var(--header-height);
             background: rgba(255, 255, 255, 0.9);
@@ -118,7 +117,7 @@
 
         /* MAIN CONTENT */
         .main-content {
-            margin-top: 120px; /* Header (70px) + Navbar (50px) */
+            margin-top: 120px;
             margin-left: var(--sidebar-width);
             padding: 2rem;
             flex: 1;
@@ -358,7 +357,6 @@
     </header>
 
     <!-- SIDEBAR -->
-    <!-- SIDEBAR -->
     <aside class="app-sidebar">
         <a href="<?= base_url('dashboard') ?>" class="menu-item"><i class='bx bxs-dashboard'></i> Dashboard</a>
         <div class="menu-title">Master Data</div>
@@ -397,7 +395,6 @@
 
     <!-- MAIN CONTENT -->
     <main class="main-content">
-
         <!-- HEADER CARD -->
         <div class="header-card">
             <div class="header-info">
@@ -406,7 +403,6 @@
             </div>
         </div>
 
-        <!-- STATS CARDS -->
         <!-- STATS CARDS RINGKASAN DATA -->
         <div class="stats-grid">
             <div class="stat-card">
@@ -451,7 +447,6 @@
             </div>
         </div>
 
-        <!-- TABS -->
         <!-- TABS NAVIGASI LAPORAN -->
         <div class="tabs">
             <div class="tab-buttons">
@@ -608,7 +603,6 @@
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
-                            <!-- TOTAL ROW -->
                             <!-- BARIS TOTAL (SUMMARY) -->
                             <tr style="background: #f8fafc; border-top: 2px solid var(--primary);">
                                 <td colspan="4" style="font-weight: 800; text-align: right;">TOTAL:</td>
@@ -677,7 +671,6 @@
                 </div>
             </div>
         </div>
-
     </main>
 
     <script>

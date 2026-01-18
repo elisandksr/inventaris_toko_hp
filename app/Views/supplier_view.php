@@ -21,11 +21,10 @@
         }
 
         * { margin:0; padding:0; box-sizing:border-box; font-family: 'Nunito', sans-serif; }
-        html { overflow-y: scroll; } /* Force Scrollbar for consistency */
+        html { overflow-y: scroll; } 
         body { background: var(--bg-body); color: var(--text-dark); display: flex; flex-direction: column; min-height: 100vh; }
 
         /* HEADER */
-        /* 1. HEADER - Colorful & Glassy */
         .app-header {
             height: var(--header-height);
             background: rgba(255, 255, 255, 0.9);
@@ -96,7 +95,7 @@
 
         /* MAIN CONTENT */
         .main-content {
-            margin-top: 120px; /* Header (70px) + Navbar (50px) */
+            margin-top: 120px;
             margin-left: var(--sidebar-width);
             padding: 2rem;
             flex: 1;
@@ -499,7 +498,7 @@
 
                         <div class="supplier-actions">
                             <!-- Tombol Edit: Panggil JS editSupplier -->
-                            <button class="btn btn-small btn-edit" onclick='editSupplier(<?= json_encode($supplier) ?>)'>
+                            <button class="btn btn-small btn-edit" onclick='editSupplier(<?= htmlspecialchars(json_encode($supplier), ENT_QUOTES, "UTF-8") ?>)'>
                                 <i class='bx bx-edit'></i>
                                 Edit
                             </button>
@@ -515,7 +514,6 @@
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>
-
     </main>
 
 

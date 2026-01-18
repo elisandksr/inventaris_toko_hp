@@ -1,5 +1,3 @@
-<!-- DASHBOARD - Tampilan utama statistik dan navigasi -->
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -14,49 +12,45 @@
     <!-- Google Fonts - Font custom untuk tampilan yang menarik -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- CSS INTERNAL -->
     <style>
-        /* VARIABEL CSS GLOBAL */
         :root {
-            /* Palet Warna Utama - Menggunakan gradient untuk tampilan modern */
-            --primary: #6366f1;                    /* Biru utama */
-            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);    /* Gradient biru-ungu */
-            --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%);  /* Gradient biru-hijau */
-            --accent-gradient: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);     /* Gradient kuning-orange */
-            --danger-gradient: linear-gradient(135deg, #ef4444 0%, #f43f5e 100%);     /* Gradient merah-pink */
-
+            --primary: #6366f1;                  
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);    
+            --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%);  
+            --accent-gradient: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);      
+            --danger-gradient: linear-gradient(135deg, #ef4444 0%, #f43f5e 100%);     
             /* Warna Background & Layout */
-            --bg-body: #f3f4f6;                   /* Background halaman utama */
-            --glass-white: rgba(255, 255, 255, 0.95);  /* Efek kaca transparan */
-            --sidebar-width: 260px;              /* Lebar sidebar navigasi */
-            --header-height: 70px;               /* Tinggi header atas */
-            --text-dark: #1e293b;                 /* Warna teks utama */
-            --text-gray: #64748b;                 /* Warna teks sekunder */
+            --bg-body: #f3f4f6;                 
+            --glass-white: rgba(255, 255, 255, 0.95);  
+            --sidebar-width: 260px;             
+            --header-height: 70px;              
+            --text-dark: #1e293b;              
+            --text-gray: #64748b;              
         }
 
         /* RESET CSS */
         * {
             margin:0; padding:0; box-sizing:border-box;
-            font-family: 'Nunito', sans-serif;  /* Font utama untuk seluruh aplikasi */
+            font-family: 'Nunito', sans-serif; 
         }
-        html { overflow-y: scroll; } /* Memaksa scrollbar vertikal untuk konsistensi tampilan */
+        html { overflow-y: scroll; } 
         body {
-            background: var(--bg-body);           /* Background halaman */
-            color: var(--text-dark);              /* Warna teks default */
-            display: flex; flex-direction: column; /* Layout flexbox vertikal */
-            min-height: 100vh;                    /* Minimal tinggi viewport penuh */
+            background: var(--bg-body);           
+            color: var(--text-dark);            
+            display: flex; flex-direction: column; 
+            min-height: 100vh;                    
         }
         
         /* 1. HEADER */
         .app-header {
-            height: var(--header-height);         /* Tinggi header */
-            background: rgba(255, 255, 255, 0.9); /* Background semi-transparan */
-            backdrop-filter: blur(10px);          /* Efek blur glassmorphism */
-            border-bottom: 2px solid transparent; /* Border gradient */
+            height: var(--header-height);        
+            background: rgba(255, 255, 255, 0.9); 
+            backdrop-filter: blur(10px);          
+            border-bottom: 2px solid transparent; 
             border-image: linear-gradient(to right, #6366f1, #a855f7, #ec4899) 1;
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 2rem; position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05); /* Shadow halus */
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05); 
         }
         .brand { 
             font-family: 'Fredoka', sans-serif; font-size: 1.6rem; font-weight: 700; 
@@ -100,21 +94,21 @@
             height: 50px; background: white; border-bottom: 1px solid #e2e8f0;
             display: flex; align-items: center; padding: 0 2rem;
             position: fixed; top: var(--header-height); left: 0; right: 0; z-index: 990;
-            padding-left: calc(var(--sidebar-width) + 2rem); /* Memberi ruang untuk sidebar */
+            padding-left: calc(var(--sidebar-width) + 2rem); 
         }
         .nav-link {
             margin-right: 20px; font-weight: 700; color: var(--text-gray);
             font-size: 0.95rem; display: flex; align-items: center; gap: 6px;
         }
-        .nav-link:hover, .nav-link.active { color: #8b5cf6; } /* Hover effect ungu */
+        .nav-link:hover, .nav-link.active { color: #8b5cf6; } 
 
         /* 3. SIDEBAR - MENU NAVIGASI */
         .app-sidebar {
-            width: var(--sidebar-width);          /* Lebar sidebar */
-            background: white;                    /* Background putih */
-            border-right: 2px solid #e2e8f0;      /* Border kanan */
+            width: var(--sidebar-width);        
+            background: white;                  
+            border-right: 2px solid #e2e8f0;    
             position: fixed; top: var(--header-height); bottom: 0; left: 0; z-index: 995;
-            padding: 2rem 0; overflow-y: auto;    /* Scroll jika konten panjang */
+            padding: 2rem 0; overflow-y: auto;  
         }
         /* Styling untuk judul grup menu (Master Data, Transaksi, Laporan) */
         .menu-title {
@@ -127,30 +121,30 @@
             display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1.5rem;
             color: var(--text-gray); font-weight: 600; transition: 0.3s;
             margin: 0.2rem 1rem; border-radius: 12px;
-            text-decoration: none; /* Menghilangkan underline default link */
+            text-decoration: none;
         }
         .menu-item:hover, .menu-item.active {
-            background: var(--primary-gradient); color: white;    /* Background gradient saat hover/active */
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);     /* Shadow efek */
-            transform: translateX(5px);                          /* Geser ke kanan saat hover */
+            background: var(--primary-gradient); color: white;   
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);    
+            transform: translateX(5px);                        
         }
-        .menu-item i { font-size: 1.3rem; } /* Ukuran ikon menu */
+        .menu-item i { font-size: 1.3rem; } 
 
         /* 4. MAIN CONTENT */
         .main-content {
-            margin-top: 120px;                   /* Jarak dari header */
-            margin-left: var(--sidebar-width);   /* Memberi ruang untuk sidebar */
-            padding: 2rem;                       /* Padding dalam */
-            flex: 1;                             /* Mengisi ruang tersisa */
+            margin-top: 120px;                   
+            margin-left: var(--sidebar-width);  
+            padding: 2rem;                     
+            flex: 1;                            
         }
 
         /* HERO SECTION & CARDS */
         .hero {
-            background: linear-gradient(120deg, #8b5cf6, #ec4899);  /* Background gradient ungu-pink */
-            border-radius: 20px; padding: 3rem; color: white;        /* Styling rounded dan padding */
-            display: flex; align-items: center; justify-content: space-between; /* Layout flex horizontal */
-            margin-bottom: 2.5rem; position: relative; overflow: hidden;        /* Posisi dan efek */
-            box-shadow: 0 10px 30px -10px rgba(236, 72, 153, 0.5);   /* Shadow dengan warna gradient */
+            background: linear-gradient(120deg, #8b5cf6, #ec4899);
+            border-radius: 20px; padding: 3rem; color: white;        
+            display: flex; align-items: center; justify-content: space-between; 
+            margin-bottom: 2.5rem; position: relative; overflow: hidden;       
+            box-shadow: 0 10px 30px -10px rgba(236, 72, 153, 0.5);   
         }
         .hero::after {
             content: ''; position: absolute; right: -50px; top: -50px;
