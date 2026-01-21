@@ -405,7 +405,7 @@
 
     <!-- MAIN CONTENT -->
     <main class="main-content">
-        <!-- ALERTS -->
+        <!-- ALERTS CRUD -->
         <!-- Cek Flash Message Sukses -->
         <?php if (session()->getFlashdata('success')): ?>
             <div class="alert alert-success">

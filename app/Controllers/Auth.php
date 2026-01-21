@@ -27,12 +27,12 @@ class Auth extends BaseController
     {
         $session = session();
         $model = new AdminModel();
-        
+        // Ambil data dari form
         $username = $this->request->getVar('username');
         $password = $this->request->getVar('password');
-        
+        // Cek data admin
         $admin = $model->where('username', $username)->first();
-        
+        // Cek password
         if ($admin) {
             $pass = $admin['password'];
             if (password_verify($password, $pass)) {

@@ -34,6 +34,7 @@ class Supplier extends BaseController
             'suppliers' => $suppliers,
             'keyword' => $keyword
         ];
+        
         return view('supplier_view', $data);
     }
 
